@@ -1,0 +1,13 @@
+{
+    "topic": "bl.robot.events.v1",
+    "headers": {
+        "event_type": "robot.delivered-resource",
+        "sequence_id": 3000
+    },
+    "payload": {
+        "gameId": "55ede8ce-3bc3-474f-9679-c1536c25024c",
+        "playerId": "58bd64fd-420a-40af-952f-e98e8f96e3fe",
+        "resourceType": "DARK_MATTER",
+        "amount": 42
+    }
+}

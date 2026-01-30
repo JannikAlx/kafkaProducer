@@ -1,0 +1,22 @@
+kafka:
+  bootstrap-servers: localhost:29092
+  topic: json-events
+  producer:
+    acks: all
+    retries: 3
+    batch-size: 16384
+    linger-ms: 1
+    buffer-memory: 33554432
+
+app:
+  input-directory: ./input
+  topic-name: ${kafka.topic:bl.robot.events.v1}
+
+spring:
+  application:
+    name: kafka-json-producer
+
+logging:
+  level:
+    com.example.kafka: INFO
+    org.apache.kafka: WARN

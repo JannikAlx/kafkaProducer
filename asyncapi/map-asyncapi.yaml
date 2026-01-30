@@ -1,0 +1,248 @@
+asyncapi: 3.0.0
+
+info:
+  title: Map Service Kafka API
+  version: 1.0.0
+
+channels:
+  db.planet.ecst.v1:
+    address: 'db.planet.ecst.v1'
+    title: 'Planet ECST'
+    description: Log compacted topic transferring the planet's current state.
+    messages:
+      planet-ecst:
+        $ref: '#/components/messages/planet-ecst'
+
+  bl.map.events.v1:
+    address: 'bl.map.events.v1'
+    title: 'Map Events'
+    description: Notifies about map and resource updates.
+    messages:
+      resource-excavated:
+        $ref: '#/components/messages/resource-excavated'
+      map-initialized:
+        $ref: '#/components/messages/map-initialized'
+
+operations:
+  publishPlanetECST:
+    channel:
+      $ref: '#/channels/db.planet.ecst.v1'
+    action: send
+    description: Publishes planet ECST updates.
+    messages:
+      - $ref: '#/channels/db.planet.ecst.v1/messages/planet-ecst'
+
+  publishResourceExcavated:
+    channel:
+      $ref: '#/channels/bl.map.events.v1'
+    action: send
+    description: Publishes notifications about excavated resources.
+    messages:
+      - $ref: '#/channels/bl.map.events.v1/messages/resource-excavated'
+
+  publishMapInitialized:
+    channel:
+      $ref: '#/channels/bl.map.events.v1'
+    action: send
+    description: Publishes notifications about map initialization.
+    messages:
+      - $ref: '#/channels/bl.map.events.v1/messages/map-initialized'
+
+components:
+  schemas:
+    gameId:
+      type: string
+      description: A game's unique id.
+      format: uuid
+
+    planetId:
+      type: string
+      format: uuid
+      description: A unique id for a planet.
+
+    robotId:
+      type: string
+      format: uuid
+      description: A unique id for a robot.
+
+    playerId:
+      type: string
+      format: uuid
+      description: A player's unique id.
+
+    position:
+      type: object
+      description: Coordinates on the map.
+      properties:
+        x:
+          type: integer
+        y:
+          type: integer
+
+    resourceType:
+      type: string
+      description: Type of resource.
+      enum:
+        - COAL
+        - IRON
+        - GEM
+        - GOLD
+        - PLATIN
+
+    resourceDeposit:
+      type: object
+      description: A resource deposit on a planet.
+      properties:
+        resourceType:
+          $ref: '#/components/schemas/resourceType'
+        currentAmount:
+          type: integer
+          minimum: 0
+        maxAmount:
+          type: integer
+          minimum: 0
+
+  messageTraits:
+    commonHeaders:
+      headers:
+        type: object
+        properties:
+          event_id:
+            type: string
+            format: uuid
+            description: |
+              Uniquely identifies an event globally across topics and partitions regardless of its schema. 
+              Can be used reliably for duplicate detection.
+            examples:
+              - a7a26ff2-e851-45b6-9634-d595f45458b7
+          entity:
+            type: string
+            description: |
+              Identifies the entity an event belongs to by name and id - primarily for debugging.
+              Contains a String in the format of <entity>.<id> with entity and id adhering to [-a-z]+.
+            examples:
+              - planet.a7a26ff2-e851-45b6-9634-d595f45458b7
+          sequence_id:
+            type: integer
+            format: int64
+            description: |
+              Identifies the sequence in which events are published or written to the outbox. 
+              Consumers may use this number to filter for duplicates, as new events will always have a higher number than previous events.
+            examples:
+              - 1277129
+          created_at:
+            type: string
+            format: date-time
+            description: |
+              Identifies the point in time the event was created. 
+              In the context of an event outbox, the timestamp was generated the moment the event was written to the outbox.
+              Contains a String in the ISO-8601 zoned date time format.
+            examples:
+              - 2019-08-24T14:15:22Z
+          event_type:
+            type: string
+            description: |
+              Identifies the type or schema used for generating the payload.
+              Contains a String that matches the schema's name (or Message-ID in AsyncAPI terms). 
+              Does not include a version.
+            examples:
+              - resource-excavated
+              - map-initialized
+          event_type_version:
+            type: integer
+            description: |
+              Identifies the type's or schema's version for generating the payload.
+              Each AsyncAPI message contains its version as part of its name, for example: Planet ECST V1;
+              1 is the message's version.
+            minimum: 1
+            examples:
+              - 1
+
+  messages:
+    planet-ecst:
+      name: 'planet-ecst'
+      title: Planet ECST V1
+      summary: Full planet ECST payload
+      description: Keyed ECST event publishing the planet's current state.
+      contentType: application/json
+      bindings:
+        kafka:
+          key:
+            $ref: '#/components/schemas/planetId'
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        type: object
+        properties:
+          planetId:
+            $ref: '#/components/schemas/planetId'
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          position:
+            $ref: '#/components/schemas/position'
+          resourceDeposits:
+            type: array
+            items:
+              $ref: '#/components/schemas/resourceDeposit'
+
+    resource-excavated:
+      name: 'resource-excavated'
+      title: Resource Excavated V1
+      summary: Resources have been excavated from a planet
+      description: Notifies about resources being excavated and available for pickup.
+      contentType: application/json
+      bindings:
+        kafka:
+          key:
+            $ref: '#/components/schemas/planetId'
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        type: object
+        properties:
+          planetId:
+            $ref: '#/components/schemas/planetId'
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          robotId:
+            $ref: '#/components/schemas/robotId'
+          playerId:
+            $ref: '#/components/schemas/playerId'
+          resourceType:
+            $ref: '#/components/schemas/resourceType'
+          amount:
+            type: integer
+            minimum: 1
+            description: Amount of resources excavated
+          remainingAmount:
+            type: integer
+            minimum: 0
+            description: Amount of resources remaining on the planet
+
+    map-initialized:
+      name: 'map-initialized'
+      title: Map Initialized V1
+      summary: Map has been initialized for a game
+      description: Notifies about map initialization with all planets and resources.
+      contentType: application/json
+      bindings:
+        kafka:
+          key:
+            $ref: '#/components/schemas/gameId'
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        type: object
+        properties:
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          mapSize:
+            type: object
+            properties:
+              width:
+                type: integer
+              height:
+                type: integer
+          planetCount:
+            type: integer
+            description: Number of planets on the map

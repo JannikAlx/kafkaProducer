@@ -1,0 +1,16 @@
+{
+    "topic": "bl.bank-account.events.v1",
+    "headers": {
+        "event_id": "d0e1f2a3-b4c5-6789-3456-789abcdef012",
+        "entity": "bank-account.4db579b0-61ee-455b-9ae7-aa4c8a8e5420",
+        "sequence_id": 43,
+        "created_at": "2025-07-11T13:07:00.200000+02:00[Europe/Berlin]",
+        "event_type": "credits-deposited",
+        "event_type_version": 1
+    },
+    "payload": {
+        "bankAccountId": "4db579b0-61ee-455b-9ae7-aa4c8a8e5420",
+        "addition": 250,
+        "newBalance": 650
+    }
+}

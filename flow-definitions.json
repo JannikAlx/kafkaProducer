@@ -1,0 +1,146 @@
+{
+    "flowDefinitions": {
+        "buy-robot-flow": {
+            "name": "Buy Robot Flow",
+            "description": "Player buys a robot voucher, credits are withdrawn, voucher is issued, and robot is constructed",
+            "steps": [
+                {
+                    "stepNumber": 1,
+                    "eventFile": "input/flows/buy-robot-flow/01-buy-robot-intent.json",
+                    "eventType": "buy-robot",
+                    "isIntent": true,
+                    "service": "player",
+                    "kafkaKey": "${playerId}",
+                    "description": "Player sends intent to buy a robot"
+                },
+                {
+                    "stepNumber": 2,
+                    "eventFile": "input/flows/buy-robot-flow/02-credits-withdrawn-event.json",
+                    "eventType": "credits-withdrawn",
+                    "isIntent": false,
+                    "service": "trading",
+                    "kafkaKey": "${bankAccountId}",
+                    "description": "Trading service withdraws credits from player's bank account"
+                },
+                {
+                    "stepNumber": 3,
+                    "eventFile": "input/flows/buy-robot-flow/03-construct-robot-voucher-issued-event.json",
+                    "eventType": "construct-robot-voucher-issued",
+                    "isIntent": false,
+                    "service": "trading",
+                    "kafkaKey": "${gameId}.${playerId}",
+                    "description": "Trading service issues a voucher for robot construction"
+                },
+                {
+                    "stepNumber": 4,
+                    "eventFile": "input/flows/buy-robot-flow/04-robot-constructed-event.json",
+                    "eventType": "robot-constructed",
+                    "isIntent": false,
+                    "service": "robot",
+                    "kafkaKey": "${gameId}.${playerId}",
+                    "description": "Robot service constructs the robot"
+                }
+            ]
+        },
+        "mining-flow": {
+            "name": "Mining/Loading Flow",
+            "description": "Player excavates resources, map service excavates them, and robot picks them up",
+            "steps": [
+                {
+                    "stepNumber": 1,
+                    "eventFile": "input/flows/mining-flow/01-excavate-resources-intent.json",
+                    "eventType": "excavate-resources",
+                    "isIntent": true,
+                    "service": "player",
+                    "kafkaKey": "${playerId}",
+                    "description": "Player sends intent to excavate resources"
+                },
+                {
+                    "stepNumber": 2,
+                    "eventFile": "input/flows/mining-flow/02-resource-excavated-event.json",
+                    "eventType": "resource-excavated",
+                    "isIntent": false,
+                    "service": "map",
+                    "kafkaKey": "${planetId}",
+                    "description": "Map service excavates resources from planet"
+                },
+                {
+                    "stepNumber": 3,
+                    "eventFile": "input/flows/mining-flow/03-resource-picked-up-event.json",
+                    "eventType": "resource-picked-up",
+                    "isIntent": false,
+                    "service": "robot",
+                    "kafkaKey": "${robotId}",
+                    "description": "Robot service picks up the excavated resources"
+                }
+            ]
+        },
+        "selling-flow": {
+            "name": "Selling Flow",
+            "description": "Player sells resources, robot delivers them, and credits are deposited",
+            "steps": [
+                {
+                    "stepNumber": 1,
+                    "eventFile": "input/flows/selling-flow/01-sell-resources-intent.json",
+                    "eventType": "sell-resources",
+                    "isIntent": true,
+                    "service": "player",
+                    "kafkaKey": "${playerId}",
+                    "description": "Player sends intent to sell resources"
+                },
+                {
+                    "stepNumber": 2,
+                    "eventFile": "input/flows/selling-flow/02-robot-delivered-resources-event.json",
+                    "eventType": "robot-delivered-resources",
+                    "isIntent": false,
+                    "service": "robot",
+                    "kafkaKey": "${robotId}",
+                    "description": "Robot service delivers resources for sale"
+                },
+                {
+                    "stepNumber": 3,
+                    "eventFile": "input/flows/selling-flow/03-credits-deposited-event.json",
+                    "eventType": "credits-deposited",
+                    "isIntent": false,
+                    "service": "trading",
+                    "kafkaKey": "${bankAccountId}",
+                    "description": "Trading service deposits credits into player's account"
+                }
+            ]
+        },
+        "movement-flow": {
+            "name": "Movement Flow",
+            "description": "Player moves a robot to a new position",
+            "steps": [
+                {
+                    "stepNumber": 1,
+                    "eventFile": "input/flows/movement-flow/01-move-robot-intent.json",
+                    "eventType": "move-robot",
+                    "isIntent": true,
+                    "service": "player",
+                    "kafkaKey": "${playerId}",
+                    "description": "Player sends intent to move robot"
+                },
+                {
+                    "stepNumber": 2,
+                    "eventFile": "input/flows/movement-flow/02-robot-moved-event.json",
+                    "eventType": "robot-moved",
+                    "isIntent": false,
+                    "service": "robot",
+                    "kafkaKey": "${robotId}",
+                    "description": "Robot service moves the robot to new position"
+                }
+            ]
+        }
+    },
+    "metadata": {
+        "version": "1.0.0",
+        "description": "Flow definitions for microservice event simulation. Each flow defines an ordered sequence of events that should be published to Kafka.",
+        "usage": {
+            "dynamicValues": "Use ${variableName} placeholders for dynamic values like playerId, gameId, robotId, etc. These should be replaced at runtime.",
+            "kafkaKeys": "The kafkaKey field specifies what should be used as the Kafka message key for partitioning.",
+            "sequenceIds": "Events (non-intents) should have incrementing sequence_ids per entity. Intents do not have sequence_ids.",
+            "extensibility": "To add new flows, simply add a new entry to flowDefinitions with the same structure."
+        }
+    }
+}

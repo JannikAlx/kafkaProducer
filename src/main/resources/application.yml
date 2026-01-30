@@ -1,20 +1,28 @@
-kafka:
-  bootstrap-servers: localhost:29092
-  topic: json-events
-  producer:
-    acks: all
-    retries: 3
-    batch-size: 16384
-    linger-ms: 1
-    buffer-memory: 33554432
-
-app:
-  input-directory: ./input
-  topic-name: ${kafka.topic:bl.robot.events.v1}
-
 spring:
-  application:
-    name: kafka-json-producer
+  kafka:
+    bootstrap-servers: localhost:29092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all
+      retries: 3
+      properties:
+        linger.ms: 10
+        batch.size: 16384
+
+# Application configuration
+app:
+  topic-name: game-events
+  input-directory: ./input
+
+# Game simulation configuration
+game:
+  simulation:
+    player-count: 10
+    map-width: 30
+    map-height: 30
+    blackhole-destruction-chance: 0.3  # 30% chance robot is destroyed when moving to blackhole
+    publish-delay-ms: 100  # Small delay between events for readability
 
 logging:
   level:

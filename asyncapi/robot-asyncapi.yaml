@@ -1,0 +1,477 @@
+asyncapi: 3.0.0
+
+info:
+  title: Robot Service Kafka API
+  version: 1.0.0
+
+channels:
+  robot.intents.v1:
+    address: 'robot.intents.v1'
+    title: 'Robot Intents'
+    description: |
+      Intents can be sent by players and will be processed by the robot service.
+      Players have to ensure they adhere to schema and business rules.
+    messages:
+      move-robot:
+        $ref: '#/components/messages/move-robot'
+      sell-resources:
+        $ref: '#/components/messages/sell-resources'
+      excavate-resources:
+        $ref: '#/components/messages/excavate-resources'
+
+  db.robot.ecst.v1:
+    address: 'db.robot.ecst.v1'
+    title: 'Robot ECST'
+    description: Log compacted topic transferring the robot's current state.
+    messages:
+      robot-ecst:
+        $ref: '#/components/messages/robot-ecst'
+
+  bl.robot.events.v1:
+    address: 'bl.robot.events.v1'
+    title: 'Robot Events'
+    description: Notifies about robot updates and actions.
+    messages:
+      robot-constructed:
+        $ref: '#/components/messages/robot-constructed'
+      robot-moved:
+        $ref: '#/components/messages/robot-moved'
+      resource-picked-up:
+        $ref: '#/components/messages/resource-picked-up'
+      robot-delivered-resources:
+        $ref: '#/components/messages/robot-delivered-resources'
+      robot-destroyed:
+        $ref: '#/components/messages/robot-destroyed'
+
+operations:
+  acceptRobotIntent:
+    channel:
+      $ref: '#/channels/robot.intents.v1'
+    action: receive
+    messages:
+      - $ref: '#/channels/robot.intents.v1/messages/move-robot'
+      - $ref: '#/channels/robot.intents.v1/messages/sell-resources'
+      - $ref: '#/channels/robot.intents.v1/messages/excavate-resources'
+
+  publishRobotECST:
+    channel:
+      $ref: '#/channels/db.robot.ecst.v1'
+    action: send
+    description: Publishes robot ECST updates.
+    messages:
+      - $ref: '#/channels/db.robot.ecst.v1/messages/robot-ecst'
+
+  publishRobotConstructed:
+    channel:
+      $ref: '#/channels/bl.robot.events.v1'
+    action: send
+    description: Publishes notifications about newly constructed robots.
+    messages:
+      - $ref: '#/channels/bl.robot.events.v1/messages/robot-constructed'
+
+  publishRobotMoved:
+    channel:
+      $ref: '#/channels/bl.robot.events.v1'
+    action: send
+    description: Publishes notifications about robot movements.
+    messages:
+      - $ref: '#/channels/bl.robot.events.v1/messages/robot-moved'
+
+  publishResourcePickedUp:
+    channel:
+      $ref: '#/channels/bl.robot.events.v1'
+    action: send
+    description: Publishes notifications about resources being picked up by robots.
+    messages:
+      - $ref: '#/channels/bl.robot.events.v1/messages/resource-picked-up'
+
+  publishRobotDeliveredResources:
+    channel:
+      $ref: '#/channels/bl.robot.events.v1'
+    action: send
+    description: Publishes notifications about robots delivering resources.
+    messages:
+      - $ref: '#/channels/bl.robot.events.v1/messages/robot-delivered-resources'
+
+components:
+  schemas:
+    playerId:
+      type: string
+      format: uuid
+      description: A player's unique id.
+
+    gameId:
+      type: string
+      description: A game's unique id.
+      format: uuid
+
+    robotId:
+      type: string
+      format: uuid
+      description: A unique id for a robot.
+
+    planetId:
+      type: string
+      format: uuid
+      description: A unique id for a planet.
+
+    position:
+      type: object
+      description: Coordinates on the map.
+      properties:
+        x:
+          type: integer
+        y:
+          type: integer
+
+    resourceType:
+      type: string
+      description: Type of resource.
+      enum:
+        - BIO_MATTER
+        - CRYO_GAS
+        - DARK_MATTER
+        - ION_DUST
+        - PLASMA_CORES
+
+    cargo:
+      type: object
+      description: Cargo carried by a robot.
+      properties:
+        resourceType:
+          $ref: '#/components/schemas/resourceType'
+        amount:
+          type: integer
+          minimum: 0
+
+  messageTraits:
+    commonHeaders:
+      headers:
+        type: object
+        properties:
+          event_id:
+            type: string
+            format: uuid
+            description: |
+              Uniquely identifies an event globally across topics and partitions regardless of its schema. 
+              Can be used reliably for duplicate detection.
+            examples:
+              - a7a26ff2-e851-45b6-9634-d595f45458b7
+          entity:
+            type: string
+            description: |
+              Identifies the entity an event belongs to by name and id - primarily for debugging.
+              Contains a String in the format of <entity>.<id> with entity and id adhering to [-a-z]+.
+            examples:
+              - robot.a7a26ff2-e851-45b6-9634-d595f45458b7
+          sequence_id:
+            type: integer
+            format: int64
+            description: |
+              Identifies the sequence in which events are published or written to the outbox. 
+              Consumers may use this number to filter for duplicates, as new events will always have a higher number than previous events.
+            examples:
+              - 1277129
+          created_at:
+            type: string
+            format: date-time
+            description: |
+              Identifies the point in time the event was created. 
+              In the context of an event outbox, the timestamp was generated the moment the event was written to the outbox.
+              Contains a String in the ISO-8601 zoned date time format.
+            examples:
+              - 2019-08-24T14:15:22Z
+          event_type:
+            type: string
+            description: |
+              Identifies the type or schema used for generating the payload.
+              Contains a String that matches the schema's name (or Message-ID in AsyncAPI terms). 
+              Does not include a version.
+            examples:
+              - robot-constructed
+              - robot-moved
+          event_type_version:
+            type: integer
+            description: |
+              Identifies the type's or schema's version for generating the payload.
+              Each AsyncAPI message contains its version as part of its name, for example: Robot ECST V1;
+              1 is the message's version.
+            minimum: 1
+            examples:
+              - 1
+
+  messages:
+    move-robot:
+      name: 'move-robot'
+      title: Move Robot Intent V1
+      summary: Indicates a player's intent to move a robot
+      bindings:
+        kafka:
+          key:
+            type: string
+            $ref: '#/components/schemas/playerId'
+      description: |
+        Players can submit this to move a robot in a compass direction.
+      traits:
+        - headers:
+            properties:
+              event_type:
+                type: string
+                enum:
+                  - move-robot
+      payload:
+        properties:
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          robotId:
+            $ref: '#/components/schemas/robotId'
+          direction:
+            type: string
+            description: Compass direction to move
+            enum:
+              - N
+              - NE
+              - E
+              - SE
+              - S
+              - SW
+              - W
+              - NW
+
+    sell-resources:
+      name: 'sell-resources'
+      title: Sell Resources Intent V1
+      summary: Indicates a player's intent to sell resources
+      bindings:
+        kafka:
+          key:
+            type: string
+            $ref: '#/components/schemas/playerId'
+      description: |
+        Players can submit this to sell resources carried by a robot.
+      traits:
+        - headers:
+            properties:
+              event_type:
+                type: string
+                enum:
+                  - sell-resources
+      payload:
+        properties:
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          robotId:
+            $ref: '#/components/schemas/robotId'
+
+    excavate-resources:
+      name: 'excavate-resources'
+      title: Excavate Resources Intent V1
+      summary: Indicates a player's intent to excavate resources from a mine
+      bindings:
+        kafka:
+          key:
+            type: string
+            $ref: '#/components/schemas/playerId'
+      description: |
+        Players can submit this to command excavation of resources from a mine.
+        The mine service will excavate resources which can then be picked up by robots.
+      traits:
+        - headers:
+            properties:
+              event_type:
+                type: string
+                enum:
+                  - excavate-resources
+      payload:
+        properties:
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          mineId:
+            type: string
+            format: uuid
+            description: The mine to excavate from
+          amount:
+            type: integer
+            minimum: 1
+            description: Amount of resources to excavate
+
+    robot-ecst:
+      name: 'robot-ecst'
+      title: Robot ECST V1
+      summary: Full robot ECST payload
+      description: Keyed ECST event publishing the robot's current state.
+      contentType: application/json
+      bindings:
+        kafka:
+          key:
+            $ref: '#/components/schemas/robotId'
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        type: object
+        properties:
+          robotId:
+            $ref: '#/components/schemas/robotId'
+          playerId:
+            $ref: '#/components/schemas/playerId'
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          position:
+            $ref: '#/components/schemas/position'
+          cargo:
+            type: array
+            items:
+              $ref: '#/components/schemas/cargo'
+          health:
+            type: integer
+            minimum: 0
+            maximum: 100
+
+    robot-constructed:
+      name: 'robot-constructed'
+      title: Robot Constructed V1
+      summary: Robot has been constructed
+      description: Notifies about a newly constructed robot.
+      contentType: application/json
+      bindings:
+        kafka:
+          key:
+            type: string
+            format: uuid.uuid
+            description: composite key consisting of GameId and PlayerId
+            examples:
+              - 4db579b0-61ee-455b-9ae7-aa4c8a8e5420.502dc92f-e291-4142-9ff0-b2cc57cec0d7
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        type: object
+        properties:
+          robotId:
+            $ref: '#/components/schemas/robotId'
+          playerId:
+            $ref: '#/components/schemas/playerId'
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          voucherId:
+            type: string
+            format: uuid
+            description: The voucher that was used to construct this robot
+          position:
+            $ref: '#/components/schemas/position'
+
+    robot-moved:
+      name: 'robot-moved'
+      title: Robot Moved V1
+      summary: Robot has moved to a new position
+      description: Notifies about a robot moving to a new position.
+      contentType: application/json
+      bindings:
+        kafka:
+          key:
+            $ref: '#/components/schemas/robotId'
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        type: object
+        properties:
+          robotId:
+            $ref: '#/components/schemas/robotId'
+          playerId:
+            $ref: '#/components/schemas/playerId'
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          fromPosition:
+            $ref: '#/components/schemas/position'
+          toPosition:
+            $ref: '#/components/schemas/position'
+
+    resource-picked-up:
+      name: 'resource-picked-up'
+      title: Resource Picked Up V1
+      summary: Robot picked up resources
+      description: Notifies about a robot picking up resources from a planet.
+      contentType: application/json
+      bindings:
+        kafka:
+          key:
+            $ref: '#/components/schemas/robotId'
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        type: object
+        properties:
+          robotId:
+            $ref: '#/components/schemas/robotId'
+          playerId:
+            $ref: '#/components/schemas/playerId'
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          planetId:
+            $ref: '#/components/schemas/planetId'
+          resourceType:
+            $ref: '#/components/schemas/resourceType'
+          amount:
+            type: integer
+            minimum: 1
+
+    robot-delivered-resources:
+      name: 'robot-delivered-resources'
+      title: Robot Delivered Resources V1
+      summary: Robot delivered resources for sale
+      description: Notifies about a robot delivering resources to be sold.
+      contentType: application/json
+      bindings:
+        kafka:
+          key:
+            $ref: '#/components/schemas/robotId'
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        type: object
+        properties:
+          robotId:
+            $ref: '#/components/schemas/robotId'
+          playerId:
+            $ref: '#/components/schemas/playerId'
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          bankAccountId:
+            type: string
+            format: uuid
+            description: The bank account that will receive credits
+          resourceType:
+            $ref: '#/components/schemas/resourceType'
+          amount:
+            type: integer
+            minimum: 1
+
+    robot-destroyed:
+      name: 'robot-destroyed'
+      title: Robot Destroyed V1
+      summary: Robot was destroyed
+      description: Notifies about a robot being destroyed (e.g., by a black hole).
+      contentType: application/json
+      bindings:
+        kafka:
+          key:
+            $ref: '#/components/schemas/robotId'
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        type: object
+        properties:
+          robotId:
+            $ref: '#/components/schemas/robotId'
+          playerId:
+            $ref: '#/components/schemas/playerId'
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          position:
+            $ref: '#/components/schemas/position'
+          reason:
+            type: string
+            description: Reason for destruction
+            enum:
+              - BLACK_HOLE
+              - COMBAT
+              - OTHER

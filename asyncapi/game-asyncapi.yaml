@@ -1,0 +1,301 @@
+asyncapi: 3.0.0
+
+info:
+  title: Game-Service Kafka Producer API
+  version: 1.0.0
+
+channels:
+  db.player.ecst.v1:
+    address: 'db.player.ecst.v1'
+    title: 'Player ECST'
+    description: Log compacted topic transferring the player's current state.
+    messages:
+      player.state-transfer:
+        $ref: '#/components/messages/player.state-transfer'
+
+  bl.player.events.v1:
+    address: 'bl.player.events.v1'
+    title: 'Player Events'
+    description: Notifies about player updates.
+    messages:
+      player.registered:
+        $ref: '#/components/messages/player.registered'
+
+  db.game.ecst.v1:
+    address: 'db.game.ecst.v1'
+    title: title
+    description: Log compacted topic transferring the game's current state.
+    messages:
+      game.state-transfer:
+        $ref: '#/components/messages/game.state-transfer'
+
+  bl.game.events.v1:
+    address: 'bl.game.events.v1'
+    title: title
+    description: Notifies about game updates.
+    messages:
+      game.created:
+        $ref: '#/components/messages/game.created'
+      game.state-changed:
+        $ref: '#/components/messages/game.state-changed'
+      game.player-joined:
+        $ref: '#/components/messages/game.player-joined'
+
+operations:
+  sendPlayerECST:
+    channel:
+      $ref: '#/channels/db.player.ecst.v1'
+    action: send
+    description: Publishes the player's updated entire state on change.
+    messages:
+      - $ref: '#/channels/db.player.ecst.v1/messages/player.state-transfer'
+
+  sendPlayerRegistered:
+    channel:
+      $ref: '#/channels/bl.player.events.v1'
+    action: send
+    description: A new player registered with the Microservice Dungeon.
+    messages:
+      - $ref: '#/channels/bl.player.events.v1/messages/player.registered'
+
+  sendGameECST:
+    channel:
+      $ref: '#/channels/db.game.ecst.v1'
+    action: send
+    description: Publishes the game's updated entire state on change.
+    messages:
+      - $ref: '#/channels/db.game.ecst.v1/messages/game.state-transfer'
+
+  sendGameCreated:
+    channel:
+      $ref: '#/channels/bl.game.events.v1'
+    action: send
+    description: A new game has been created.
+    messages:
+      - $ref: '#/channels/bl.game.events.v1/messages/game.created'
+
+  sendGameStateChanged:
+    channel:
+      $ref: '#/channels/bl.game.events.v1'
+    action: send
+    description: A game's state has changed.
+    messages:
+      - $ref: '#/channels/bl.game.events.v1/messages/game.state-changed'
+
+  sendPlayerJoined:
+    channel:
+      $ref: '#/channels/bl.game.events.v1'
+    action: send
+    description: A new player has joined the game.
+    messages:
+      - $ref: '#/channels/bl.game.events.v1/messages/game.player-joined'
+
+components:
+  schemas:
+    playerId:
+      type: string
+      format: uuid
+      description: A player's unique id.
+
+    playerName:
+      type: string
+      description: A player's unique name.
+      minLength: 2
+      example: Bente
+
+    gameId:
+      type: string
+      description: A game's unique id.
+      format: uuid
+
+    participantId:
+      type: string
+      format: uuid
+      description: A participant's unique id.
+
+    participantLimit:
+      type: integer
+      description: Limits the number of participants in a game.
+      minimum: 2
+
+    gameState:
+      type: string
+      description: Defines the state a game is in.
+      enum:
+        - CREATED
+        - STARTED
+        - STOPPED
+
+    participant:
+      type: object
+      description: A player participating in a game.
+      properties:
+        participantId:
+          $ref: "#/components/schemas/participantId"
+        playerId:
+          $ref: "#/components/schemas/playerId"
+        joinedAt:
+          type: string
+          format: date-time
+          description: Point in time the player joined the game.
+
+  messageTraits:
+    commonHeaders:
+      headers:
+        type: object
+        properties:
+          event_id:
+            type: string
+            format: uuid
+            description: |
+              Uniquely identifies an event globally across topics and partitions regardless of its schema. 
+              Can be used reliably for duplicate detection.
+            examples:
+              - a7a26ff2-e851-45b6-9634-d595f45458b7
+          entity:
+            type: string
+            description: |
+              Identifies the entity an event belongs to by name and id - primarily for debugging.
+              Contains a String in the format of <entity>.<id> with entity and id adhering to [-a-z]+.
+            examples:
+              - player.a7a26ff2-e851-45b6-9634-d595f45458b7
+          sequence_id:
+            type: integer
+            format: int64
+            description: |
+              Identifies the sequence in which events are published or written to the outbox. 
+              Consumers may use this number to filter for duplicates, as new events will always have a higher number than previous events.
+            examples:
+              - 1277129
+          created_at:
+            type: string
+            format: date-time
+            description: |
+              Identifies the point in time the event was created. 
+              In the context of an event outbox, the timestamp was generated the moment the event was written to the outbox.
+              Contains a String in the ISO-8601 zoned date time format.
+            examples:
+              - 2019-08-24T14:15:22Z
+          event_type:
+            type: string
+            description: |
+              Identifies the type or schema used for generating the payload.
+              Contains a String that matches the schema's name (or Message-ID in AsyncAPI terms). 
+              Does not include a version.
+            examples:
+              - player.state-transfer
+              - player.registered
+          event_type_version:
+            type: integer
+            description: |
+              Identifies the type's or schema's version for generating the payload.
+              Each AsyncAPI message contains its version as part of its name, for example: Player ECST V1;
+              1 is the message's version.
+            minimum: 1
+            examples:
+              - 1
+
+  messages:
+    player.state-transfer:
+      name: 'player.state-transfer'
+      title: Player ECST V1
+      summary: Describes the player
+      description: Keyed ECST event publishing the player's current state.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        type: object
+        properties:
+          playerId:
+            $ref: '#/components/schemas/playerId'
+          playerName:
+            $ref: '#/components/schemas/playerName'
+
+    player.registered:
+      name: 'player.registered'
+      title: Player Registered V1
+      summary: New player registered
+      description: Notifies about the registration of a new player.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        type: object
+        properties:
+          playerId:
+            $ref: '#/components/schemas/playerId'
+          playerName:
+            $ref: '#/components/schemas/playerName'
+
+    game.state-transfer:
+      name: 'game.state-transfer'
+      title: Game ECST V1
+      summary: Describes the game
+      description: Keyed ECST event publishing the game's current state.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        type: object
+        properties:
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          participantLimit:
+            $ref: '#/components/schemas/participantLimit'
+          participants:
+            type: array
+            items:
+              $ref: '#/components/schemas/participant'
+          state:
+            $ref: '#/components/schemas/gameState'
+
+    game.created:
+      name: 'game.created'
+      title: Game Created V1
+      summary: New game created
+      description: Notifies about the creation of a new game.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        type: object
+        properties:
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          participantLimit:
+            $ref: '#/components/schemas/participantLimit'
+          state:
+            $ref: '#/components/schemas/gameState'
+
+    game.state-changed:
+      name: 'game.state-changed'
+      title: Game State Changed V1
+      summary: Game state updated
+      description: Notifies about an updated game state.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        type: object
+        properties:
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          state:
+            $ref: '#/components/schemas/gameId'
+
+    game.player-joined:
+      name: 'game.player-joined'
+      title: Player Joined V1
+      summary: Player joined game
+      description: Notifies about a new player joined the game to participate.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        type: object
+        properties:
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          participant:
+            $ref: '#/components/schemas/participant'

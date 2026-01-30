@@ -1,0 +1,582 @@
+asyncapi: 3.0.0
+
+info:
+  title: Trading Service Kafka API
+  version: 1.0.0
+
+channels:
+  voucher.intents.v1:
+    address: 'voucher.intents.v1'
+    title: 'Voucher Intents'
+    description: |
+      Intents can be sent by players and will be processed by trading to the best of its ability (near real time). 
+      Players have to ensure they adhere to schema and business rules. Vouchers are non-refundable.
+    messages:
+      buy-robot:
+        $ref: '#/components/messages/buy-robot'
+      upgrade-robot:
+        $ref: '#/components/messages/upgrade-robot'
+
+  db.bank-account.ecst.v1:
+    bindings:
+      kafka:
+        topic: 'db.bank-account.ecst.v1'
+        partitions: 4
+        replicas: 3
+        topicConfiguration:
+          cleanup.policy:
+            - compact
+    address: 'db.bank-account.ecst.v1'
+    title: 'BankAccount ECST'
+    description: Log compacted topic transferring the bankaccounts state.
+    messages:
+      bank-account-ecst:
+        $ref: '#/components/messages/bank-account-ecst'
+
+  bl.bank-account.events.v1:
+    address: 'bl.bank-account.events.v1'
+    title: 'BankAccount Events'
+    description: Notifies about bankaccount updates.
+    messages:
+      bank-account-opened:
+        $ref: '#/components/messages/bank-account-opened'
+      credits-deposited:
+        $ref: '#/components/messages/credits-deposited'
+      credits-withdrawn:
+        $ref: '#/components/messages/credits-withdrawn'
+
+  bl.bank-account.errors.v1:
+    address: 'bl.bank-account.errors.v1'
+    title: 'BankAccount Errors'
+    description: Notifies about bankaccount related errors.
+    messages:
+      bank-account-failure:
+        $ref: '#/components/messages/voucher-failure'
+
+  bl.voucher.events.v1:
+    address: 'bl.voucher.events.v1'
+    title: 'Voucher Events'
+    description: Notifies about voucher lifecycle events.
+    messages:
+      construct-robot-voucher-issued:
+        $ref: '#/components/messages/construct-robot-voucher-issued'
+      upgrade-robot-voucher-issued:
+        $ref: '#/components/messages/upgrade-robot-voucher-issued'
+
+  trading-service.dlt:
+    address: 'trading-service.dlt'
+    title: 'Dead Letter Topic'
+    description: Captures intents that weren't processed correctly.
+    messages:
+      voucher-failure:
+        $ref: '#/components/messages/voucher-failure'
+
+  core.trading-service.dlt:
+    address: core.trading-service.dlt
+    description: Publishes error Information about unprocessable records from core services.
+    messages:
+      dead-letter-message:
+        $ref: '#/components/messages/dead-letter-message'
+    bindings:
+      kafka:
+        topic: core.trading-service.dlt
+        bindingVersion: '0.5.0'
+
+operations:
+
+  acceptVoucherIntent:
+    channel:
+      $ref: '#/channels/voucher.intents.v1'
+    action: receive
+    messages:
+      - $ref: '#/channels/voucher.intents.v1/messages/buy-robot'
+      - $ref: '#/channels/voucher.intents.v1/messages/upgrade-robot'
+
+  publishBankAccountECST:
+    channel:
+      $ref: '#/channels/db.bank-account.ecst.v1'
+    action: send
+    description: Publishes bank account ECST updates.
+    messages:
+      - $ref: '#/channels/db.bank-account.ecst.v1/messages/bank-account-ecst'
+
+  publishBankAccountOpened:
+    channel:
+      $ref: '#/channels/bl.bank-account.events.v1'
+    action: send
+    description: Publishes notifications about newly opened bank accounts.
+    messages:
+      - $ref: '#/channels/bl.bank-account.events.v1/messages/bank-account-opened'
+
+  publishCreditsDeposited:
+    channel:
+      $ref: '#/channels/bl.bank-account.events.v1'
+    action: send
+    description: Publishes events about deposited credits and resulting balances.
+    messages:
+      - $ref: '#/channels/bl.bank-account.events.v1/messages/credits-deposited'
+
+  publishCreditsWithdrawn:
+    channel:
+      $ref: '#/channels/bl.bank-account.events.v1'
+    action: send
+    description: Publishes events about withdrawn credits and resulting balances.
+    messages:
+      - $ref: '#/channels/bl.bank-account.events.v1/messages/credits-withdrawn'
+
+  publishConstructRobotVoucherIssued:
+    channel:
+      $ref: '#/channels/bl.voucher.events.v1'
+    action: send
+    description: Publishes construct robot voucher events to trigger robot construction workflows.
+    messages:
+      - $ref: '#/channels/bl.voucher.events.v1/messages/construct-robot-voucher-issued'
+
+  publishUpgradeRobotVoucherIssued:
+    channel:
+      $ref: '#/channels/bl.voucher.events.v1'
+    action: send
+    description: Publishes upgrade robot voucher events to trigger robot upgrade workflows.
+    messages:
+      - $ref: '#/channels/bl.voucher.events.v1/messages/upgrade-robot-voucher-issued'
+
+  publishVoucherFailure:
+    channel:
+      $ref: '#/channels/trading-service.dlt'
+    action: send
+    description: Publishes voucher error events for diagnostics and compensating actions.
+    messages:
+      - $ref: '#/channels/trading-service.dlt/messages/voucher-failure'
+
+  publishDeadLetter:
+    action: send
+    description: Publishes processing failures from core events to a dead letter topic.
+    channel:
+      $ref: '#/channels/core.trading-service.dlt'
+    messages:
+      - $ref: '#/channels/core.trading-service.dlt/messages/dead-letter-message'
+
+components:
+  schemas:
+    playerId:
+      type: string
+      format: uuid
+      description: A player's unique id.
+
+    gameId:
+      type: string
+      description: A game's unique id.
+      format: uuid
+
+    bankAccountId:
+      type: string
+      format: uuid
+      description: A unique id for a bank account.
+
+    balance:
+      type: object
+      description: Holds the current balance of a bank account.
+      properties:
+        currentCredits:
+          type: integer
+          description: current credits amount
+      example:
+        currentCredits: 500
+
+    credit:
+      type: object
+      description: Currency in the MSD. Used for purchases, credited as reward.
+      properties:
+        amount:
+          type: integer
+
+    voucherId:
+      type: string
+      format: uuid
+      description: A unique id for a voucher.
+
+    robotId:
+      type: string
+      format: uuid
+      description: A unique id for a robot.
+
+    upgradeType:
+      type: string
+      description: The type of capability to upgrade for a robot.
+      enum:
+        - MINING
+        - COMBAT
+        - MOVEMENT
+        - ENERGY
+
+  messageTraits:
+    commonHeaders:
+      headers:
+        type: object
+        properties:
+          event_id:
+            type: string
+            format: uuid
+            description: |
+              Uniquely identifies an event globally across topics and partitions regardless of its schema. 
+              Can be used reliably for duplicate detection.
+            examples:
+              - a7a26ff2-e851-45b6-9634-d595f45458b7
+          entity:
+            type: string
+            description: |
+              Identifies the entity an event belongs to by name and id - primarily for debugging.
+              Contains a String in the format of <entity>.<id> with entity and id adhering to [-a-z]+.
+            examples:
+              - voucher.a7a26ff2-e851-45b6-9634-d595f45458b7
+          sequence_id:
+            type: number
+            format: long
+            description: |
+              Identifies the sequence in which events are published or written to the outbox. 
+              Consumers may use this number to filter for duplicates, as new events will always have a higher number than previous events.
+            examples:
+              - 1277129
+          created_at:
+            type: string
+            format: date-time
+            description: |
+              Identifies the point in time the event was created. 
+              In the context of an event outbox, the timestamp was generated the moment the event was written to the outbox.
+              Contains a String in the ISO-8601 zoned date time format.
+            examples:
+              - 2019-08-24T14:15:22Z
+          event_type:
+            type: string
+            description: |
+              Identifies the type or schema used for generating the payload.
+              Contains a String that matches the schema's name (or Message-ID in AsyncAPI terms). 
+              Does not include a version.
+            examples:
+              - credits-withdrawn
+              - robot-voucher-issued
+          event_type_version:
+            type: integer
+            description: |
+              Identifies the type's or schema's version for generating the payload.
+              Each AsyncAPI message contains its version as part of its name, for example: Player ECST V1;
+              1 is the message's version.
+            minimum: 1
+            examples: [1,2,3,4]
+
+  messages:
+    buy-robot:
+      name: 'buy-robot'
+      title: Buy Robot Intent V1
+      summary: Indicates a players intent to buy a robot voucher
+      bindings:
+        kafka:
+          key:
+            type: string
+            $ref: '#/components/schemas/playerId'
+            description: Required - Id of the player that intends to buy the robot.
+      description: |
+        Players can submit this to buy robots. The amount of robots is defined by the player, but they must ensure they have enough credits.
+        Otherwise a failure event will be emitted.
+      traits:
+          - headers:
+              properties:
+                event_type:
+                  type: string
+                  enum:
+                    - buy-robot
+      payload:
+        properties:
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          amountOfRobots:
+            type: integer
+            minimum: 1
+            description: the amount of robots the player intends to buy.
+    upgrade-robot:
+      name: 'upgrade-robot'
+      title: Upgrade Robot Intent V1
+      summary: Indicates a players intent to upgrade a robot
+      bindings:
+        kafka:
+          key:
+            type: string
+            $ref: '#/components/schemas/playerId'
+      description: | 
+        Players can submit this to buy an upgrade voucher. 
+        This voucher permits upgrading a specific robot capability by the specified amount of levels.
+        The amount of levels is defined by the player, but they must ensure they have enough credits. Otherwise a failure event will be emitted.
+      traits:
+        - headers:
+            properties:
+              event_type:
+                type: string
+                enum:
+                  - upgrade-robot
+      payload:
+        properties:
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          upgradeLevelCount:
+            type: integer
+            minimum: 1
+            maximum: 5
+            description: The amount of levels the robot voucher should be valid for.
+          upgradeType:
+            $ref: '#/components/schemas/upgradeType'
+
+
+
+    bank-account-ecst:
+      name: 'bank-account-ecst'
+      title: BankAccount ECST V1
+      summary: Full bank account ECST payload
+      description: Keyed ECST event publishing the bank account's current state.
+      contentType: application/json
+      bindings:
+        kafka:
+          key:
+            $ref: '#/components/schemas/bankAccountId'
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        type: object
+        properties:
+          bankAccountId:
+            $ref: '#/components/schemas/bankAccountId'
+          playerId:
+            $ref: '#/components/schemas/playerId'
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          balance:
+            $ref: '#/components/schemas/balance'
+
+    bank-account-opened:
+      name: 'bank-account-opened'
+      title: BankAccount Opened V1
+      summary: Bank account opened
+      description: Notifies about a newly opened bank account including current balance.
+      contentType: application/json
+      bindings:
+        kafka:
+          key:
+            $ref: '#/components/schemas/bankAccountId'
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+          headers:
+            properties:
+              event_type:
+                type: string
+                enum:
+                  - bank-account-opened
+      payload:
+        type: object
+        properties:
+          bankAccountId:
+            $ref: '#/components/schemas/bankAccountId'
+          playerId:
+            $ref: '#/components/schemas/playerId'
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          balance:
+            $ref: '#/components/schemas/balance'
+
+    credits-deposited:
+      name: 'credits-deposited'
+      title: Credits Deposited V1
+      summary: Credits were deposited into an account
+      description: Notifies about credits deposited and the resulting balance.
+      contentType: application/json
+      bindings:
+        kafka:
+          key:
+            $ref: '#/components/schemas/bankAccountId'
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        type: object
+        properties:
+          bankAccountId:
+            $ref: '#/components/schemas/bankAccountId'
+          addition:
+            type: integer
+            description: amount of credits added
+          newBalance:
+            type: integer
+            description: resulting balance
+
+    credits-withdrawn:
+      name: 'credits-withdrawn'
+      title: Credits Withdrawn V1
+      summary: Credits were withdrawn from an account
+      description: Notifies about credits withdrawn and the resulting balance.
+      contentType: application/json
+      bindings:
+        kafka:
+          key:
+            $ref: '#/components/schemas/bankAccountId'
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        type: object
+        properties:
+          bankAccountId:
+            $ref: '#/components/schemas/bankAccountId'
+          deduction:
+            type: integer
+            description: amount of deducted credits
+          newBalance:
+            type: integer
+            description: resulting balance
+
+    voucher-failure:
+      name: 'voucher-failure-event'
+      title: BankAccount Failure V1
+      summary: Bank account related failure
+      description: Notifies about failures related to Voucher operations.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      bindings:
+        kafka:
+          key:
+            $ref: '#/components/schemas/playerId'
+            description: If available - PlayerId. If not - null
+      payload:
+        type: object
+        properties:
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          playerId:
+            $ref: '#/components/schemas/playerId'
+          errorCode:
+            type: integer
+            description: Indicates the type of error.
+            default: -1
+          errorMessage:
+            type: string
+
+    construct-robot-voucher-issued:
+      name: 'construct-robot-voucher-issued'
+      title: Construct Robot Voucher Issued V1
+      summary: Voucher issued for constructing robots
+      description: A player is now eligible for the construction of the amount of robots specified in this voucher.
+      contentType: application/json
+      bindings:
+        kafka:
+          key:
+            type: string
+            format: uuid.uuid
+            description: composite key consisting of GameId and PlayerId
+            examples:
+              - 4db579b0-61ee-455b-9ae7-aa4c8a8e5420.502dc92f-e291-4142-9ff0-b2cc57cec0d7
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        type: object
+        properties:
+          voucherId:
+            $ref: '#/components/schemas/voucherId'
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          playerId:
+            $ref: '#/components/schemas/playerId'
+          totalPrice:
+            type: integer
+            description: total credit cost of this voucher
+          numberOfRobots:
+            type: integer
+            minimum: 1
+            description: amount of robots that should be constructed for the player
+    upgrade-robot-voucher-issued:
+      name: 'upgrade-robot-voucher-issued'
+      title: Upgrade Robot Voucher Issued V1
+      summary: Voucher issued for upgrading robots
+      description: A player is now eligible to upgrade the specified robot capability by the specified amount of levels.
+      contentType: application/json
+      bindings:
+        kafka:
+          key:
+            type: string
+            format: uuid.uuid
+            description: composite key consisting of GameId and PlayerId
+            examples:
+              - 4db579b0-61ee-455b-9ae7-aa4c8a8e5420.502dc92f-e291-4142-9ff0-b2cc57cec0d7
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        type: object
+        properties:
+          voucherId:
+            $ref: '#/components/schemas/voucherId'
+          gameId:
+            $ref: '#/components/schemas/gameId'
+          playerId:
+            $ref: '#/components/schemas/playerId'
+          robotId:
+            $ref: '#/components/schemas/robotId'
+          totalPrice:
+            type: integer
+            description: total credit cost of this voucher
+          upgradeLevelCount:
+            type: integer
+            minimum: 1
+            maximum: 5
+            description: amount of levels that the robot should be upgraded by
+          upgradeType:
+            $ref: '#/components/schemas/upgradeType'
+
+    dead-letter-message:
+      name: dead-letter-message
+      title: Dead letter message
+      summary: Message that failed to be processed by the trading service.
+      contentType: application/octet-stream
+      headers:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            description: Original message creation time.
+          entity:
+            type: string
+            description: Entity identifier (e.g. `game.{uuid}`).
+          event_id:
+            type: string
+            format: uuid
+          event_type:
+            type: string
+          event_type_version:
+            type: integer
+            description: Version of the event type.
+          trace_id:
+            type: string
+            format: uuid
+          kafka_dlt-exception-cause-fqcn:
+            type: string
+          kafka_dlt-exception-fqcn:
+            type: string
+          kafka_dlt-exception-message:
+            type: string
+          kafka_dlt-exception-stacktrace:
+            type: string
+          kafka_dlt-original-consumer-group:
+            type: string
+          kafka_dlt-original-offset:
+            type: integer
+            format: int64
+          kafka_dlt-original-partition:
+            type: integer
+          kafka_dlt-original-timestamp:
+            type: string
+            description: Original record timestamp (epoch millis as string or ISO\-8601, depending on serializer).
+          kafka_dlt-original-timestamp-type:
+            type: string
+            enum: [ CreateTime, LogAppendTime ]
+          kafka_dlt-original-topic:
+            type: string
+      payload:
+        type: string
+        format: binary
+        description: Raw payload of the original message as sent to the DLT.
+

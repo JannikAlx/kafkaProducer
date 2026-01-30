@@ -1,0 +1,21 @@
+{
+    "topic": "bl.robot.events.v1",
+    "headers": {
+        "event_id": "d4e5f6a7-b8c9-0123-def0-123456789abc",
+        "entity": "robot.22222222-2222-2222-2222-222222222222",
+        "sequence_id": 1,
+        "created_at": "2025-07-11T13:05:00.300000+02:00[Europe/Berlin]",
+        "event_type": "robot-constructed",
+        "event_type_version": 1
+    },
+    "payload": {
+        "robotId": "22222222-2222-2222-2222-222222222222",
+        "playerId": "57c0edfc-50e3-4682-81a3-2f52327f83eb",
+        "gameId": "502dc92f-e291-4142-9ff0-b2cc57cec0d7",
+        "voucherId": "11111111-1111-1111-1111-111111111111",
+        "position": {
+            "x": 0,
+            "y": 0
+        }
+    }
+}

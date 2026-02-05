@@ -1,12 +1,14 @@
 package de.microservicedungeon.mock.eventing.events.game;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.microservicedungeon.mock.eventing.AbstractEventFactory;
 import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
 import de.microservicedungeon.mock.state.SequenceIdManager;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Component;
 
@@ -50,16 +52,16 @@ public class PlayerJoinedEvent extends AbstractEventFactory<PlayerJoinedEvent.Pl
     ) {}
 
     /**
-     * Fluent builder for creating PlayerJoinedEvent payloads.
+     * Fluent builder for creating PlayerJoinedEvent ProducerRecords.
      */
-    public static class PlayerJoinedEventBuilder {
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public class PlayerJoinedEventBuilder {
         private UUID gameId;
         private ParticipantPayload participant;
 
-        public static PlayerJoinedEventBuilder forGame(UUID gameId) {
-            PlayerJoinedEventBuilder builder = new PlayerJoinedEventBuilder();
-            builder.gameId = gameId;
-            return builder;
+        public PlayerJoinedEventBuilder forGame(UUID gameId) {
+            this.gameId = gameId;
+            return this;
         }
 
         public PlayerJoinedEventBuilder withPlayer(UUID playerId) {
@@ -72,23 +74,24 @@ public class PlayerJoinedEvent extends AbstractEventFactory<PlayerJoinedEvent.Pl
             return this;
         }
 
-        public PlayerJoinedPayload build() {
-            return new PlayerJoinedPayload(gameId, participant);
+        public ProducerRecord<String, byte[]> build() {
+            PlayerJoinedPayload payload = new PlayerJoinedPayload(gameId, participant);
+
+            CommonHeaders headers = CommonHeaders.builder()
+                    .eventType(SCHEMA)
+                    .eventTypeVersion(SCHEMA_VERSION)
+                    .entity(AGGREGATE_NAME + "." + gameId.toString())
+                    .createdAt(System.currentTimeMillis()).build();
+
+            return buildRecord(TOPIC_NAME, gameId.toString(), payload, headers);
         }
     }
 
     /**
-     * Builds a new {@code PlayerJoinedEvent} ProducerRecord from a given payload.
-     * @param payload the event payload
-     * @return a ProducerRecord ready to be published to Kafka
+     * Creates a new builder instance for constructing PlayerJoinedEvent ProducerRecords.
+     * @return a new PlayerJoinedEventBuilder
      */
-    public ProducerRecord<String, byte[]> build(PlayerJoinedPayload payload) {
-        CommonHeaders headers = CommonHeaders.builder()
-                .eventType(SCHEMA)
-                .eventTypeVersion(SCHEMA_VERSION)
-                .entity(AGGREGATE_NAME + "." + payload.gameId().toString())
-                .createdAt(System.currentTimeMillis()).build();
-
-        return buildRecord(TOPIC_NAME, payload.gameId().toString(), payload, headers);
+    public PlayerJoinedEventBuilder builder() {
+        return new PlayerJoinedEventBuilder();
     }
 }

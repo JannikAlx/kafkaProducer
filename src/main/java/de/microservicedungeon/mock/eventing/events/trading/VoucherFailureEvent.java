@@ -1,11 +1,13 @@
 package de.microservicedungeon.mock.eventing.events.trading;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.microservicedungeon.mock.eventing.AbstractEventFactory;
 import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
 import de.microservicedungeon.mock.state.SequenceIdManager;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Component;
 
@@ -42,19 +44,61 @@ public class VoucherFailureEvent extends AbstractEventFactory<VoucherFailureEven
     ) {}
 
     /**
-     * Builds a new {@code VoucherFailureEvent} ProducerRecord from a given payload.
-     * @param payload the event payload
-     * @return a ProducerRecord ready to be published to Kafka
+     * Fluent builder for creating VoucherFailureEvent ProducerRecords.
      */
-    public ProducerRecord<String, byte[]> build(VoucherFailurePayload payload) {
-        CommonHeaders headers = CommonHeaders.builder()
-                .eventType(SCHEMA)
-                .eventTypeVersion(SCHEMA_VERSION)
-                .entity(AGGREGATE_NAME + "." + payload.playerId())
-                .createdAt(System.currentTimeMillis())
-                .build();
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public class VoucherFailureEventBuilder {
+        private String gameId;
+        private String playerId;
+        private int errorCode;
+        private String exceptionName;
+        private String errorMessage;
 
-        return buildRecord(TOPIC_NAME, payload.playerId(), payload, headers);
+        public VoucherFailureEventBuilder inGame(String gameId) {
+            this.gameId = gameId;
+            return this;
+        }
+
+        public VoucherFailureEventBuilder forPlayer(String playerId) {
+            this.playerId = playerId;
+            return this;
+        }
+
+        public VoucherFailureEventBuilder withErrorCode(int errorCode) {
+            this.errorCode = errorCode;
+            return this;
+        }
+
+        public VoucherFailureEventBuilder withException(String exceptionName) {
+            this.exceptionName = exceptionName;
+            return this;
+        }
+
+        public VoucherFailureEventBuilder withErrorMessage(String errorMessage) {
+            this.errorMessage = errorMessage;
+            return this;
+        }
+
+        public ProducerRecord<String, byte[]> build() {
+            VoucherFailurePayload payload = new VoucherFailurePayload(gameId, playerId, errorCode, exceptionName, errorMessage);
+
+            CommonHeaders headers = CommonHeaders.builder()
+                    .eventType(SCHEMA)
+                    .eventTypeVersion(SCHEMA_VERSION)
+                    .entity(AGGREGATE_NAME + "." + playerId)
+                    .createdAt(System.currentTimeMillis())
+                    .build();
+
+            return buildRecord(TOPIC_NAME, playerId, payload, headers);
+        }
+    }
+
+    /**
+     * Creates a new builder instance for constructing VoucherFailureEvent ProducerRecords.
+     * @return a new VoucherFailureEventBuilder
+     */
+    public VoucherFailureEventBuilder builder() {
+        return new VoucherFailureEventBuilder();
     }
 
 }

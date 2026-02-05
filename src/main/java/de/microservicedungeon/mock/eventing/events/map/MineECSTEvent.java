@@ -1,12 +1,14 @@
 package de.microservicedungeon.mock.eventing.events.map;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.microservicedungeon.mock.eventing.AbstractEventFactory;
 import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
 import de.microservicedungeon.mock.state.SequenceIdManager;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Component;
 
@@ -44,18 +46,54 @@ public class MineECSTEvent extends AbstractEventFactory<MineECSTEvent.MineECSTPa
     ) {}
 
     /**
-     * Builds a new {@code MineECSTEvent} ProducerRecord from a given payload.
-     * @param payload the event payload
-     * @return a ProducerRecord ready to be published to Kafka
+     * Fluent builder for creating MineECSTEvent ProducerRecords.
      */
-    public ProducerRecord<String, byte[]> build(MineECSTPayload payload) {
-        CommonHeaders headers = CommonHeaders.builder()
-                .eventType(SCHEMA)
-                .eventTypeVersion(SCHEMA_VERSION)
-                .entity(AGGREGATE_NAME + "." + payload.mineId().toString())
-                .createdAt(System.currentTimeMillis())
-                .build();
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public class MineECSTEventBuilder {
+        private UUID mineId;
+        private UUID gameId;
+        private String resourceType;
+        private Integer resourceAmount;
 
-        return buildRecord(TOPIC_NAME, payload.mineId().toString(), payload, headers);
+        public MineECSTEventBuilder forMine(UUID mineId) {
+            this.mineId = mineId;
+            return this;
+        }
+
+        public MineECSTEventBuilder inGame(UUID gameId) {
+            this.gameId = gameId;
+            return this;
+        }
+
+        public MineECSTEventBuilder withResourceType(String resourceType) {
+            this.resourceType = resourceType;
+            return this;
+        }
+
+        public MineECSTEventBuilder withResourceAmount(Integer resourceAmount) {
+            this.resourceAmount = resourceAmount;
+            return this;
+        }
+
+        public ProducerRecord<String, byte[]> build() {
+            MineECSTPayload payload = new MineECSTPayload(mineId, gameId, resourceType, resourceAmount);
+
+            CommonHeaders headers = CommonHeaders.builder()
+                    .eventType(SCHEMA)
+                    .eventTypeVersion(SCHEMA_VERSION)
+                    .entity(AGGREGATE_NAME + "." + mineId.toString())
+                    .createdAt(System.currentTimeMillis())
+                    .build();
+
+            return buildRecord(TOPIC_NAME, mineId.toString(), payload, headers);
+        }
+    }
+
+    /**
+     * Creates a new builder instance for constructing MineECSTEvent ProducerRecords.
+     * @return a new MineECSTEventBuilder
+     */
+    public MineECSTEventBuilder builder() {
+        return new MineECSTEventBuilder();
     }
 }

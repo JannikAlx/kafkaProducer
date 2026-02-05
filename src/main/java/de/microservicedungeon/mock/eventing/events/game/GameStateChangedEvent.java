@@ -1,11 +1,13 @@
 package de.microservicedungeon.mock.eventing.events.game;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.microservicedungeon.mock.eventing.AbstractEventFactory;
 import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
 import de.microservicedungeon.mock.state.SequenceIdManager;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Component;
 
@@ -36,18 +38,42 @@ public class GameStateChangedEvent extends AbstractEventFactory<GameStateChanged
     ) {}
 
     /**
-     * Builds a new GameStateChangedEvent ProducerRecord from a given payload.
-     * @param payload the event payload
-     * @return a ProducerRecord ready to be published to Kafka
+     * Fluent builder for creating GameStateChangedEvent ProducerRecords.
      */
-    public ProducerRecord<String, byte[]> build(GameStateChangedPayload payload) {
-        CommonHeaders headers = CommonHeaders.builder()
-                .eventType(SCHEMA)
-                .eventTypeVersion(SCHEMA_VERSION)
-                .entity(AGGREGATE_NAME + "." + payload.gameId().toString())
-                .createdAt(System.currentTimeMillis())
-                .build();
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public class GameStateChangedEventBuilder {
+        private UUID gameId;
+        private String state;
 
-        return buildRecord(TOPIC_NAME, payload.gameId().toString(), payload, headers);
+        public GameStateChangedEventBuilder forGame(UUID gameId) {
+            this.gameId = gameId;
+            return this;
+        }
+
+        public GameStateChangedEventBuilder withState(String state) {
+            this.state = state;
+            return this;
+        }
+
+        public ProducerRecord<String, byte[]> build() {
+            GameStateChangedPayload payload = new GameStateChangedPayload(gameId, state);
+
+            CommonHeaders headers = CommonHeaders.builder()
+                    .eventType(SCHEMA)
+                    .eventTypeVersion(SCHEMA_VERSION)
+                    .entity(AGGREGATE_NAME + "." + gameId.toString())
+                    .createdAt(System.currentTimeMillis())
+                    .build();
+
+            return buildRecord(TOPIC_NAME, gameId.toString(), payload, headers);
+        }
+    }
+
+    /**
+     * Creates a new builder instance for constructing GameStateChangedEvent ProducerRecords.
+     * @return a new GameStateChangedEventBuilder
+     */
+    public GameStateChangedEventBuilder builder() {
+        return new GameStateChangedEventBuilder();
     }
 }

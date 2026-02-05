@@ -1,9 +1,9 @@
 package de.microservicedungeon.mock.model;
 
+import de.microservicedungeon.mock.eventing.events.robot.RobotConstructedEvent;
 import de.microservicedungeon.mock.eventing.events.trading.BankAccountECSTEvent;
 import de.microservicedungeon.mock.eventing.events.trading.ConstructRobotVoucherIssued;
 import de.microservicedungeon.mock.eventing.events.trading.CreditsWithdrawnEvent;
-import de.microservicedungeon.mock.eventing.events.robot.RobotConstructedEvent;
 import de.microservicedungeon.mock.eventing.intents.BuyConstructRobotVoucherIntentFactory;
 import de.microservicedungeon.mock.model.map.Coordinate;
 import de.microservicedungeon.mock.model.trading.BankAccount;
@@ -37,19 +37,37 @@ public class BuyRobotChain {
         int deductedCredits = robotsBought * Fixtures.ROBOT_PRICE;
         int finalCredits = bankAccount.balance() - deductedCredits;
         records.add(intentFactory.build(playerId, currentGame, robotsBought));
-        records.add(bankAccountECSTEvent.build(new BankAccountECSTEvent.BankAccountECSTPayload(bankAccount.bankAccountId(), playerId, currentGame, finalCredits)));
-        records.add(creditsWithdrawnEvent.build(new CreditsWithdrawnEvent.CreditsWithdrawnPayload(bankAccount.bankAccountId(), deductedCredits, finalCredits)));
-        records.add(constructRobotVoucherIssued.build(new ConstructRobotVoucherIssued.ConstructRobotVoucherPayload(UUID.randomUUID(), currentGame, playerId, deductedCredits, robotsBought)));
+        records.add(bankAccountECSTEvent.builder()
+                .forBankAccount(bankAccount.bankAccountId())
+                .withCurrentCredits(bankAccount.balance())
+                .withPlayer(playerId)
+                .inGame(currentGame)
+                .build());
+
+        records.add(creditsWithdrawnEvent.builder()
+                .forBankAccount(bankAccount.bankAccountId())
+                .withNewBalance(finalCredits)
+                .withDeduction(deductedCredits)
+                .build());
+
+        records.add(constructRobotVoucherIssued.builder()
+                .forPlayer(playerId)
+                .inGame(currentGame)
+                .forVoucher(UUID.randomUUID())
+                .withNumberOfRobots(robotsBought)
+                .withTotalPrice(deductedCredits)
+                .build());
 
         Map<UUID, Coordinate> newRobotPositions = new HashMap<>();
         for (int i = 0; i < robotsBought; i++) {
             UUID robotId = UUID.randomUUID();
             Coordinate newCoordinate = gameState.getRandomRobotSpawn();
-            records.add(robotConstructedEvent.build(
-                    new RobotConstructedEvent.RobotConstructedPayload(
-                            robotId, playerId, currentGame, new RobotConstructedEvent.PositionPayload(newCoordinate.getX(), newCoordinate.getY())
-                    )
-            ));
+            records.add(robotConstructedEvent.builder()
+                    .inGame(currentGame)
+                    .forRobot(robotId)
+                    .withPlayer(playerId)
+                    .atPosition(newCoordinate.getX(), newCoordinate.getY())
+                    .build());
             newRobotPositions.put(robotId, newCoordinate);
         }
 
@@ -63,8 +81,8 @@ public class BuyRobotChain {
         gameState.setPlayerBalance(bankAccount.bankAccountId(), finalCredits);
     }
 
-    public void executeForGame(GameState gameState){
-        for (UUID player: gameState.currentPlayers()){
+    public void executeForGame(GameState gameState) {
+        for (UUID player : gameState.currentPlayers()) {
             executeForPlayer(player, gameState);
         }
     }

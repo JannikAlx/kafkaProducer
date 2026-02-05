@@ -1,14 +1,16 @@
 package de.microservicedungeon.mock.eventing.events.robot;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.microservicedungeon.mock.eventing.AbstractEventFactory;
 import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
 import de.microservicedungeon.mock.state.SequenceIdManager;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Component;
 
@@ -74,17 +76,70 @@ public class RobotECSTEvent extends AbstractEventFactory<RobotECSTEvent.RobotECS
     ) {}
 
     /**
-     * Builds a new {@code RobotECSTEvent} ProducerRecord from a given payload.
-     * @param payload the event payload
-     * @return a ProducerRecord ready to be published to Kafka
+     * Fluent builder for creating RobotECSTEvent ProducerRecords.
      */
-    public ProducerRecord<String, byte[]> build(RobotECSTPayload payload) {
-        CommonHeaders headers = CommonHeaders.builder()
-                .eventType(SCHEMA)
-                .eventTypeVersion(SCHEMA_VERSION)
-                .entity(AGGREGATE_NAME + "." + payload.robotId().toString())
-                .createdAt(System.currentTimeMillis()).build();
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public class RobotECSTEventBuilder {
+        private UUID robotId;
+        private UUID playerId;
+        private UUID gameId;
+        private PositionPayload position;
+        private List<CargoPayload> cargo;
+        private Integer health;
 
-        return buildRecord(TOPIC_NAME, payload.robotId().toString(), payload, headers);
+        public RobotECSTEventBuilder forRobot(UUID robotId) {
+            this.robotId = robotId;
+            return this;
+        }
+
+        public RobotECSTEventBuilder withPlayer(UUID playerId) {
+            this.playerId = playerId;
+            return this;
+        }
+
+        public RobotECSTEventBuilder inGame(UUID gameId) {
+            this.gameId = gameId;
+            return this;
+        }
+
+        public RobotECSTEventBuilder atPosition(PositionPayload position) {
+            this.position = position;
+            return this;
+        }
+
+        public RobotECSTEventBuilder atPosition(Integer x, Integer y) {
+            this.position = new PositionPayload(x, y);
+            return this;
+        }
+
+        public RobotECSTEventBuilder withCargo(List<CargoPayload> cargo) {
+            this.cargo = cargo;
+            return this;
+        }
+
+        public RobotECSTEventBuilder withHealth(Integer health) {
+            this.health = health;
+            return this;
+        }
+
+        public ProducerRecord<String, byte[]> build() {
+            RobotECSTPayload payload = new RobotECSTPayload(robotId, playerId, gameId, position, cargo, health);
+
+            CommonHeaders headers = CommonHeaders.builder()
+                    .eventType(SCHEMA)
+                    .eventTypeVersion(SCHEMA_VERSION)
+                    .entity(AGGREGATE_NAME + "." + robotId.toString())
+                    .createdAt(System.currentTimeMillis()).build();
+
+            return buildRecord(TOPIC_NAME, robotId.toString(), payload, headers);
+        }
+    }
+
+    /**
+     * Creates a new builder instance for constructing RobotECSTEvent ProducerRecords.
+     * @return a new RobotECSTEventBuilder
+     */
+    public RobotECSTEventBuilder builder() {
+        return new RobotECSTEventBuilder();
     }
 }

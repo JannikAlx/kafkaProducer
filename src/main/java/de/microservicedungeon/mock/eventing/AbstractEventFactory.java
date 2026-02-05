@@ -1,9 +1,9 @@
 package de.microservicedungeon.mock.eventing;
 
-import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
-import de.microservicedungeon.mock.state.SequenceIdManager;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
+import de.microservicedungeon.mock.state.SequenceIdManager;
 import lombok.AllArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.header.internals.RecordHeader;
@@ -17,7 +17,7 @@ public abstract class AbstractEventFactory<T> {
 
     protected ProducerRecord<String, byte[]> buildRecord(String topic, String key, T payload, CommonHeaders headers){
 
-        ProducerRecord<String, byte[]> record = null;
+        ProducerRecord<String, byte[]> record;
         try {
             record = new ProducerRecord<>(
                     topic,

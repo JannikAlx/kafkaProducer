@@ -1,12 +1,14 @@
 package de.microservicedungeon.mock.eventing.events.game;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.microservicedungeon.mock.eventing.AbstractEventFactory;
 import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
 import de.microservicedungeon.mock.state.SequenceIdManager;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Component;
 
@@ -56,17 +58,53 @@ public class GameStateTransferEvent extends AbstractEventFactory<GameStateTransf
     ) {}
 
     /**
-     * Builds a new {@code GameStateTransferEvent} ProducerRecord from a given payload.
-     * @param payload the event payload
-     * @return a ProducerRecord ready to be published to Kafka
+     * Fluent builder for creating GameStateTransferEvent ProducerRecords.
      */
-    public ProducerRecord<String, byte[]> build(GameStateTransferPayload payload) {
-        CommonHeaders headers = CommonHeaders.builder()
-                .eventType(SCHEMA)
-                .eventTypeVersion(SCHEMA_VERSION)
-                .entity(AGGREGATE_NAME + "." + payload.gameId().toString())
-                .createdAt(System.currentTimeMillis()).build();
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public class GameStateTransferEventBuilder {
+        private UUID gameId;
+        private List<ParticipantPayload> participants;
+        private Integer participantLimit;
+        private String state;
 
-        return buildRecord(TOPIC_NAME, payload.gameId().toString(), payload, headers);
+        public GameStateTransferEventBuilder forGame(UUID gameId) {
+            this.gameId = gameId;
+            return this;
+        }
+
+        public GameStateTransferEventBuilder withParticipants(List<ParticipantPayload> participants) {
+            this.participants = participants;
+            return this;
+        }
+
+        public GameStateTransferEventBuilder withParticipantLimit(Integer participantLimit) {
+            this.participantLimit = participantLimit;
+            return this;
+        }
+
+        public GameStateTransferEventBuilder withState(String state) {
+            this.state = state;
+            return this;
+        }
+
+        public ProducerRecord<String, byte[]> build() {
+            GameStateTransferPayload payload = new GameStateTransferPayload(gameId, participants, participantLimit, state);
+
+            CommonHeaders headers = CommonHeaders.builder()
+                    .eventType(SCHEMA)
+                    .eventTypeVersion(SCHEMA_VERSION)
+                    .entity(AGGREGATE_NAME + "." + gameId.toString())
+                    .createdAt(System.currentTimeMillis()).build();
+
+            return buildRecord(TOPIC_NAME, gameId.toString(), payload, headers);
+        }
+    }
+
+    /**
+     * Creates a new builder instance for constructing GameStateTransferEvent ProducerRecords.
+     * @return a new GameStateTransferEventBuilder
+     */
+    public GameStateTransferEventBuilder builder() {
+        return new GameStateTransferEventBuilder();
     }
 }

@@ -1,14 +1,16 @@
 package de.microservicedungeon.mock.eventing.events.map;
 
-import de.microservicedungeon.mock.model.map.GameMap;
-import de.microservicedungeon.mock.model.map.StarSystem;
-import de.microservicedungeon.mock.eventing.AbstractEventFactory;
-import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
-import de.microservicedungeon.mock.state.SequenceIdManager;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.microservicedungeon.mock.eventing.AbstractEventFactory;
+import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
+import de.microservicedungeon.mock.model.map.GameMap;
+import de.microservicedungeon.mock.model.map.StarSystem;
+import de.microservicedungeon.mock.state.SequenceIdManager;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Component;
 
@@ -125,21 +127,65 @@ public class MapInitializedEvent extends AbstractEventFactory<MapInitializedEven
     }
 
     /**
+     * Fluent builder for creating MapInitializedEvent ProducerRecords.
+     */
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public class MapInitializedEventBuilder {
+        private UUID gameId;
+        private GameMap gameMap;
+        private MapDataPayload mapData;
+
+        public MapInitializedEventBuilder forGame(UUID gameId) {
+            this.gameId = gameId;
+            return this;
+        }
+
+        public MapInitializedEventBuilder withGameMap(GameMap gameMap) {
+            this.gameMap = gameMap;
+            return this;
+        }
+
+        public MapInitializedEventBuilder withMapData(MapDataPayload mapData) {
+            this.mapData = mapData;
+            return this;
+        }
+
+        public ProducerRecord<String, byte[]> build() {
+            MapInitializedPayload payload;
+            if (gameMap != null) {
+                payload = mapToPayload(gameMap, gameId);
+            } else if (mapData != null) {
+                payload = new MapInitializedPayload(gameId, mapData);
+            } else {
+                throw new IllegalStateException("Either gameMap or mapData must be provided");
+            }
+
+            CommonHeaders headers = CommonHeaders.builder()
+                    .eventType(SCHEMA)
+                    .eventTypeVersion(SCHEMA_VERSION)
+                    .entity(AGGREGATE_NAME + "." + gameId.toString())
+                    .createdAt(System.currentTimeMillis())
+                    .build();
+
+            return buildRecord(TOPIC_NAME, gameId.toString(), payload, headers);
+        }
+    }
+
+    /**
+     * Creates a new builder instance for constructing MapInitializedEvent ProducerRecords.
+     * @return a new MapInitializedEventBuilder
+     */
+    public MapInitializedEventBuilder builder() {
+        return new MapInitializedEventBuilder();
+    }
+
+    /**
      * Builds a new {@code MapInitializedEvent} ProducerRecord from a given GameMap.
-     *
      * @param gameMap the game map to convert
      * @param gameId the game ID for the event
      * @return a ProducerRecord ready to be published to Kafka
      */
     public ProducerRecord<String, byte[]> build(GameMap gameMap, UUID gameId) {
-        MapInitializedPayload payload = mapToPayload(gameMap, gameId);
-        CommonHeaders headers = CommonHeaders.builder()
-                .eventType(SCHEMA)
-                .eventTypeVersion(SCHEMA_VERSION)
-                .entity(AGGREGATE_NAME + "." + payload.gameId().toString())
-                .createdAt(System.currentTimeMillis())
-                .build();
-
-        return buildRecord(TOPIC_NAME, payload.gameId().toString(), payload, headers);
+        return builder().forGame(gameId).withGameMap(gameMap).build();
     }
 }

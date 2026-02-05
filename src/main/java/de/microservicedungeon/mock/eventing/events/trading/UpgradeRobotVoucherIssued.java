@@ -1,13 +1,15 @@
 package de.microservicedungeon.mock.eventing.events.trading;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.microservicedungeon.mock.eventing.AbstractEventFactory;
 import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
 import de.microservicedungeon.mock.state.SequenceIdManager;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Component;
 
@@ -51,18 +53,66 @@ public class UpgradeRobotVoucherIssued extends AbstractEventFactory<UpgradeRobot
     ) {}
 
     /**
-     * Builds a new {@code UpgradeRobotVoucherIssued} ProducerRecord from a given payload.
-     * @param payload the event payload
-     * @return a ProducerRecord ready to be published to Kafka
+     * Fluent builder for creating UpgradeRobotVoucherIssued ProducerRecords.
      */
-    public ProducerRecord<String, byte[]> build(UpgradeRobotVoucherPayload payload) {
-        CommonHeaders headers = CommonHeaders.builder()
-                .eventType(SCHEMA)
-                .eventTypeVersion(SCHEMA_VERSION)
-                .entity(AGGREGATE_NAME + "." + payload.gameId().toString() + "." + payload.playerId().toString())
-                .createdAt(System.currentTimeMillis())
-                .build();
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public class UpgradeRobotVoucherIssuedBuilder {
+        private UUID voucherId;
+        private UUID gameId;
+        private UUID playerId;
+        private int totalPrice;
+        private int upgradeLevelCount;
+        private String upgradeType;
 
-        return buildRecord(TOPIC_NAME, payload.gameId().toString() + "." + payload.playerId().toString(), payload, headers);
+        public UpgradeRobotVoucherIssuedBuilder forVoucher(UUID voucherId) {
+            this.voucherId = voucherId;
+            return this;
+        }
+
+        public UpgradeRobotVoucherIssuedBuilder inGame(UUID gameId) {
+            this.gameId = gameId;
+            return this;
+        }
+
+        public UpgradeRobotVoucherIssuedBuilder forPlayer(UUID playerId) {
+            this.playerId = playerId;
+            return this;
+        }
+
+        public UpgradeRobotVoucherIssuedBuilder withTotalPrice(int totalPrice) {
+            this.totalPrice = totalPrice;
+            return this;
+        }
+
+        public UpgradeRobotVoucherIssuedBuilder withUpgradeLevelCount(int upgradeLevelCount) {
+            this.upgradeLevelCount = upgradeLevelCount;
+            return this;
+        }
+
+        public UpgradeRobotVoucherIssuedBuilder withUpgradeType(String upgradeType) {
+            this.upgradeType = upgradeType;
+            return this;
+        }
+
+        public ProducerRecord<String, byte[]> build() {
+            UpgradeRobotVoucherPayload payload = new UpgradeRobotVoucherPayload(voucherId, gameId, playerId, totalPrice, upgradeLevelCount, upgradeType);
+
+            CommonHeaders headers = CommonHeaders.builder()
+                    .eventType(SCHEMA)
+                    .eventTypeVersion(SCHEMA_VERSION)
+                    .entity(AGGREGATE_NAME + "." + gameId.toString() + "." + playerId.toString())
+                    .createdAt(System.currentTimeMillis())
+                    .build();
+
+            return buildRecord(TOPIC_NAME, gameId.toString() + "." + playerId.toString(), payload, headers);
+        }
+    }
+
+    /**
+     * Creates a new builder instance for constructing UpgradeRobotVoucherIssued ProducerRecords.
+     * @return a new UpgradeRobotVoucherIssuedBuilder
+     */
+    public UpgradeRobotVoucherIssuedBuilder builder() {
+        return new UpgradeRobotVoucherIssuedBuilder();
     }
 }

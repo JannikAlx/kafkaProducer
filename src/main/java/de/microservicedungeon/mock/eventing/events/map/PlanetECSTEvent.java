@@ -1,13 +1,15 @@
 package de.microservicedungeon.mock.eventing.events.map;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.microservicedungeon.mock.eventing.AbstractEventFactory;
 import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
 import de.microservicedungeon.mock.state.SequenceIdManager;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Component;
 
@@ -69,18 +71,59 @@ public class PlanetECSTEvent extends AbstractEventFactory<PlanetECSTEvent.Planet
     ) {}
 
     /**
-     * Builds a new {@code PlanetECSTEvent} ProducerRecord from a given payload.
-     * @param payload the event payload
-     * @return a ProducerRecord ready to be published to Kafka
+     * Fluent builder for creating PlanetECSTEvent ProducerRecords.
      */
-    public ProducerRecord<String, byte[]> build(PlanetECSTPayload payload) {
-        CommonHeaders headers = CommonHeaders.builder()
-                .eventType(SCHEMA)
-                .eventTypeVersion(SCHEMA_VERSION)
-                .entity(AGGREGATE_NAME + "." + payload.planetId().toString())
-                .createdAt(System.currentTimeMillis())
-                .build();
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public class PlanetECSTEventBuilder {
+        private UUID planetId;
+        private UUID gameId;
+        private PositionPayload position;
+        private List<ResourceDepositPayload> resourceDeposits;
 
-        return buildRecord(TOPIC_NAME, payload.planetId().toString(), payload, headers);
+        public PlanetECSTEventBuilder forPlanet(UUID planetId) {
+            this.planetId = planetId;
+            return this;
+        }
+
+        public PlanetECSTEventBuilder inGame(UUID gameId) {
+            this.gameId = gameId;
+            return this;
+        }
+
+        public PlanetECSTEventBuilder atPosition(PositionPayload position) {
+            this.position = position;
+            return this;
+        }
+
+        public PlanetECSTEventBuilder atPosition(Integer x, Integer y) {
+            this.position = new PositionPayload(x, y);
+            return this;
+        }
+
+        public PlanetECSTEventBuilder withResourceDeposits(List<ResourceDepositPayload> resourceDeposits) {
+            this.resourceDeposits = resourceDeposits;
+            return this;
+        }
+
+        public ProducerRecord<String, byte[]> build() {
+            PlanetECSTPayload payload = new PlanetECSTPayload(planetId, gameId, position, resourceDeposits);
+
+            CommonHeaders headers = CommonHeaders.builder()
+                    .eventType(SCHEMA)
+                    .eventTypeVersion(SCHEMA_VERSION)
+                    .entity(AGGREGATE_NAME + "." + planetId.toString())
+                    .createdAt(System.currentTimeMillis())
+                    .build();
+
+            return buildRecord(TOPIC_NAME, planetId.toString(), payload, headers);
+        }
+    }
+
+    /**
+     * Creates a new builder instance for constructing PlanetECSTEvent ProducerRecords.
+     * @return a new PlanetECSTEventBuilder
+     */
+    public PlanetECSTEventBuilder builder() {
+        return new PlanetECSTEventBuilder();
     }
 }

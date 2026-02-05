@@ -1,12 +1,14 @@
 package de.microservicedungeon.mock.eventing.events.trading;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.microservicedungeon.mock.eventing.AbstractEventFactory;
 import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
 import de.microservicedungeon.mock.state.SequenceIdManager;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Component;
 
@@ -40,18 +42,47 @@ public class CreditsWithdrawnEvent extends AbstractEventFactory<CreditsWithdrawn
     ) {}
 
     /**
-     * Builds a new {@code CreditsWithdrawnEvent} ProducerRecord from a given payload.
-     *
-     * @param payload the event payload
-     * @return a ProducerRecord ready to be published to Kafka
+     * Fluent builder for creating CreditsWithdrawnEvent ProducerRecords.
      */
-    public ProducerRecord<String, byte[]> build(CreditsWithdrawnPayload payload) {
-        CommonHeaders headers = CommonHeaders.builder()
-                .eventType(SCHEMA)
-                .eventTypeVersion(SCHEMA_VERSION)
-                .entity(AGGREGATE_NAME + "." + payload.bankAccountId().toString())
-                .createdAt(System.currentTimeMillis()).build();
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public class CreditsWithdrawnEventBuilder {
+        private UUID bankAccountId;
+        private int deduction;
+        private int newBalance;
 
-        return buildRecord(TOPIC_NAME, payload.bankAccountId().toString(), payload, headers);
+        public CreditsWithdrawnEventBuilder forBankAccount(UUID bankAccountId) {
+            this.bankAccountId = bankAccountId;
+            return this;
+        }
+
+        public CreditsWithdrawnEventBuilder withDeduction(int deduction) {
+            this.deduction = deduction;
+            return this;
+        }
+
+        public CreditsWithdrawnEventBuilder withNewBalance(int newBalance) {
+            this.newBalance = newBalance;
+            return this;
+        }
+
+        public ProducerRecord<String, byte[]> build() {
+            CreditsWithdrawnPayload payload = new CreditsWithdrawnPayload(bankAccountId, deduction, newBalance);
+
+            CommonHeaders headers = CommonHeaders.builder()
+                    .eventType(SCHEMA)
+                    .eventTypeVersion(SCHEMA_VERSION)
+                    .entity(AGGREGATE_NAME + "." + bankAccountId.toString())
+                    .createdAt(System.currentTimeMillis()).build();
+
+            return buildRecord(TOPIC_NAME, bankAccountId.toString(), payload, headers);
+        }
+    }
+
+    /**
+     * Creates a new builder instance for constructing CreditsWithdrawnEvent ProducerRecords.
+     * @return a new CreditsWithdrawnEventBuilder
+     */
+    public CreditsWithdrawnEventBuilder builder() {
+        return new CreditsWithdrawnEventBuilder();
     }
 }

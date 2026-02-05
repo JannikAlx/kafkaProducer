@@ -1,12 +1,14 @@
 package de.microservicedungeon.mock.eventing.events.robot;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.microservicedungeon.mock.eventing.AbstractEventFactory;
 import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
 import de.microservicedungeon.mock.state.SequenceIdManager;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Component;
 
@@ -56,18 +58,65 @@ public class RobotDestroyedEvent extends AbstractEventFactory<RobotDestroyedEven
     ) {}
 
     /**
-     * Builds a new {@code RobotDestroyedEvent} ProducerRecord from a given payload.
-     * @param payload the event payload
-     * @return a ProducerRecord ready to be published to Kafka
+     * Fluent builder for creating RobotDestroyedEvent ProducerRecords.
      */
-    public ProducerRecord<String, byte[]> build(RobotDestroyedPayload payload) {
-        CommonHeaders headers = CommonHeaders.builder()
-                .eventType(SCHEMA)
-                .eventTypeVersion(SCHEMA_VERSION)
-                .entity(AGGREGATE_NAME + "." + payload.robotId().toString())
-                .createdAt(System.currentTimeMillis())
-                .build();
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public class RobotDestroyedEventBuilder {
+        private UUID robotId;
+        private UUID playerId;
+        private UUID gameId;
+        private PositionPayload position;
+        private String reason;
 
-        return buildRecord(TOPIC_NAME, payload.robotId().toString(), payload, headers);
+        public RobotDestroyedEventBuilder forRobot(UUID robotId) {
+            this.robotId = robotId;
+            return this;
+        }
+
+        public RobotDestroyedEventBuilder withPlayer(UUID playerId) {
+            this.playerId = playerId;
+            return this;
+        }
+
+        public RobotDestroyedEventBuilder inGame(UUID gameId) {
+            this.gameId = gameId;
+            return this;
+        }
+
+        public RobotDestroyedEventBuilder atPosition(PositionPayload position) {
+            this.position = position;
+            return this;
+        }
+
+        public RobotDestroyedEventBuilder atPosition(Integer x, Integer y) {
+            this.position = new PositionPayload(x, y);
+            return this;
+        }
+
+        public RobotDestroyedEventBuilder withReason(String reason) {
+            this.reason = reason;
+            return this;
+        }
+
+        public ProducerRecord<String, byte[]> build() {
+            RobotDestroyedPayload payload = new RobotDestroyedPayload(robotId, playerId, gameId, position, reason);
+
+            CommonHeaders headers = CommonHeaders.builder()
+                    .eventType(SCHEMA)
+                    .eventTypeVersion(SCHEMA_VERSION)
+                    .entity(AGGREGATE_NAME + "." + robotId.toString())
+                    .createdAt(System.currentTimeMillis())
+                    .build();
+
+            return buildRecord(TOPIC_NAME, robotId.toString(), payload, headers);
+        }
+    }
+
+    /**
+     * Creates a new builder instance for constructing RobotDestroyedEvent ProducerRecords.
+     * @return a new RobotDestroyedEventBuilder
+     */
+    public RobotDestroyedEventBuilder builder() {
+        return new RobotDestroyedEventBuilder();
     }
 }

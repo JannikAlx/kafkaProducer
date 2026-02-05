@@ -1,9 +1,9 @@
 package de.microservicedungeon.mock.eventing.intents;
 
-import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;

@@ -1,10 +1,12 @@
 package de.microservicedungeon.mock.model;
 
-import de.microservicedungeon.mock.eventing.events.GameCreatedEvent;
-import de.microservicedungeon.mock.eventing.events.game.*;
+import de.microservicedungeon.mock.eventing.events.game.GameCreatedEvent;
+import de.microservicedungeon.mock.eventing.events.game.GameStateChangedEvent;
+import de.microservicedungeon.mock.eventing.events.game.GameStateTransferEvent;
+import de.microservicedungeon.mock.eventing.events.game.PlayerJoinedEvent;
+import de.microservicedungeon.mock.eventing.events.map.MapInitializedEvent;
 import de.microservicedungeon.mock.eventing.events.trading.BankAccountECSTEvent;
 import de.microservicedungeon.mock.eventing.events.trading.BankAccountOpenedEvent;
-import de.microservicedungeon.mock.eventing.events.map.MapInitializedEvent;
 import de.microservicedungeon.mock.model.map.GameMap;
 import de.microservicedungeon.mock.model.trading.BankAccount;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +15,9 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Component
@@ -112,11 +116,12 @@ public class GameInitChain {
                         .build()
         );
 
-        records.add(gameStateTransferEvent.build(
-                new GameStateTransferEvent.GameStateTransferPayload(
-                        gameId, List.of(), participantLimit, GAME_STATE_CREATED
-                )
-        ));
+        records.add(gameStateTransferEvent.builder()
+                        .forGame(gameId)
+                        .withParticipantLimit(participantLimit)
+                        .withParticipants(List.of())
+                        .withState(GAME_STATE_CREATED)
+                .build());
     }
 
     /**
@@ -130,18 +135,17 @@ public class GameInitChain {
         log.debug("Adding player join events for {} players in game {}", players.size(), gameId);
 
         for (UUID playerId : players) {
-            records.add(playerJoinedEvent.build(
-                    PlayerJoinedEvent.PlayerJoinedEventBuilder
+            records.add(playerJoinedEvent.builder()
                             .forGame(gameId)
                             .withPlayer(playerId)
-                            .build()
-            ));
+                            .build());
 
-            records.add(gameStateTransferEvent.build(
-                    new GameStateTransferEvent.GameStateTransferPayload(
-                            gameId, participantPayloads, participantLimit, GAME_STATE_CREATED
-                    )
-            ));
+            records.add(gameStateTransferEvent.builder()
+                    .forGame(gameId)
+                    .withParticipants(participantPayloads)
+                    .withState(GAME_STATE_CREATED)
+                    .withParticipantLimit(participantLimit)
+                    .build());
         }
     }
 
@@ -157,22 +161,19 @@ public class GameInitChain {
         players.forEach(playerId -> {
             BankAccount bankAccount = gameState.getPlayerBankAccount(playerId);
 
-            records.add(bankAccountOpenedEvent.build(
-                    BankAccountOpenedEvent.BankAccountOpenedPayload
-                            .builder()
-                            .withBankAccountId(bankAccount.bankAccountId())
-                            .withPlayerId(playerId)
-                            .withGameId(gameId)
-                            .withCurrentCredits(bankAccount.balance())
-                            .build()
-            ));
+            records.add(bankAccountOpenedEvent.builder()
+                            .forBankAccount(bankAccount.bankAccountId())
+                            .withPlayer(playerId)
+                            .inGame(gameId)
+                            .withBalance(bankAccount.balance())
+                            .build());
 
-            records.add(bankAccountECSTEvent.build(
-                    new BankAccountECSTEvent.BankAccountECSTPayload(
-                            bankAccount.bankAccountId(), playerId, gameId,
-                            bankAccount.balance()
-                    )
-            ));
+            records.add(bankAccountECSTEvent.builder()
+                    .forBankAccount(bankAccount.bankAccountId())
+                    .inGame(gameId)
+                    .withCurrentCredits(bankAccount.balance())
+                    .withPlayer(playerId)
+                    .build());
         });
     }
 
@@ -194,15 +195,17 @@ public class GameInitChain {
                                   int participantLimit) {
         log.debug("Adding game start events for game {}", gameId);
 
-        records.add(gameStateChangedEvent.build(
-                new GameStateChangedEvent.GameStateChangedPayload(gameId, GAME_STATE_STARTED)
-        ));
+        records.add(gameStateChangedEvent.builder()
+                .forGame(gameId)
+                .withState(GAME_STATE_STARTED)
+                .build());
 
-        records.add(gameStateTransferEvent.build(
-                new GameStateTransferEvent.GameStateTransferPayload(
-                        gameId, participantPayloads, participantLimit, GAME_STATE_STARTED
-                )
-        ));
+        records.add(gameStateTransferEvent.builder()
+                        .forGame(gameId)
+                        .withState(GAME_STATE_STARTED)
+                        .withParticipantLimit(participantLimit)
+                        .withParticipants(participantPayloads)
+                .build());
     }
 
     /**

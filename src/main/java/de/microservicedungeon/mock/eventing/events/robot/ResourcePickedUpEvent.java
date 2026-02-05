@@ -1,12 +1,14 @@
 package de.microservicedungeon.mock.eventing.events.robot;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.microservicedungeon.mock.eventing.AbstractEventFactory;
 import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
 import de.microservicedungeon.mock.state.SequenceIdManager;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Component;
 
@@ -50,18 +52,67 @@ public class ResourcePickedUpEvent extends AbstractEventFactory<ResourcePickedUp
     ) {}
 
     /**
-     * Builds a new {@code ResourcePickedUpEvent} ProducerRecord from a given payload.
-     * @param payload the event payload
-     * @return a ProducerRecord ready to be published to Kafka
+     * Fluent builder for creating ResourcePickedUpEvent ProducerRecords.
      */
-    public ProducerRecord<String, byte[]> build(ResourcePickedUpPayload payload) {
-        CommonHeaders headers = CommonHeaders.builder()
-                .eventType(SCHEMA)
-                .eventTypeVersion(SCHEMA_VERSION)
-                .entity(AGGREGATE_NAME + "." + payload.robotId().toString())
-                .createdAt(System.currentTimeMillis())
-                .build();
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public class ResourcePickedUpEventBuilder {
+        private UUID robotId;
+        private UUID playerId;
+        private UUID gameId;
+        private UUID planetId;
+        private String resourceType;
+        private Integer amount;
 
-        return buildRecord(TOPIC_NAME, payload.robotId().toString(), payload, headers);
+        public ResourcePickedUpEventBuilder forRobot(UUID robotId) {
+            this.robotId = robotId;
+            return this;
+        }
+
+        public ResourcePickedUpEventBuilder withPlayer(UUID playerId) {
+            this.playerId = playerId;
+            return this;
+        }
+
+        public ResourcePickedUpEventBuilder inGame(UUID gameId) {
+            this.gameId = gameId;
+            return this;
+        }
+
+        public ResourcePickedUpEventBuilder fromPlanet(UUID planetId) {
+            this.planetId = planetId;
+            return this;
+        }
+
+        public ResourcePickedUpEventBuilder withResourceType(String resourceType) {
+            this.resourceType = resourceType;
+            return this;
+        }
+
+        public ResourcePickedUpEventBuilder withAmount(Integer amount) {
+            this.amount = amount;
+            return this;
+        }
+
+        public ProducerRecord<String, byte[]> build() {
+            ResourcePickedUpPayload payload = new ResourcePickedUpPayload(
+                    robotId, playerId, gameId, planetId, resourceType, amount);
+
+            CommonHeaders headers = CommonHeaders.builder()
+                    .eventType(SCHEMA)
+                    .eventTypeVersion(SCHEMA_VERSION)
+                    .entity(AGGREGATE_NAME + "." + robotId.toString())
+                    .createdAt(System.currentTimeMillis())
+                    .build();
+
+            return buildRecord(TOPIC_NAME, robotId.toString(), payload, headers);
+        }
+    }
+
+    /**
+     * Creates a new builder instance for constructing ResourcePickedUpEvent ProducerRecords.
+     * @return a new ResourcePickedUpEventBuilder
+     */
+    public ResourcePickedUpEventBuilder builder() {
+        return new ResourcePickedUpEventBuilder();
     }
 }

@@ -1,9 +1,9 @@
 package de.microservicedungeon.mock.state;
 
-import de.microservicedungeon.mock.model.map.GameMap;
-import de.microservicedungeon.mock.model.trading.BankAccount;
 import de.microservicedungeon.mock.model.GameState;
 import de.microservicedungeon.mock.model.map.Coordinate;
+import de.microservicedungeon.mock.model.map.GameMap;
+import de.microservicedungeon.mock.model.trading.BankAccount;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

@@ -1,13 +1,13 @@
 package de.microservicedungeon.mock.eventing.events.trading;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.microservicedungeon.mock.eventing.AbstractEventFactory;
 import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
 import de.microservicedungeon.mock.state.SequenceIdManager;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Component;
 
@@ -34,19 +34,54 @@ public class BankAccountECSTEvent extends AbstractEventFactory<BankAccountECSTEv
     }
 
     /**
-     * Builds a new {@code BankAccountECSTEvent} ProducerRecord from a given payload.
-     *
-     * @param payload the event payload
-     * @return a ProducerRecord ready to be published to Kafka
+     * Fluent builder for creating BankAccountECSTEvent ProducerRecords.
      */
-    public ProducerRecord<String, byte[]> build(BankAccountECSTPayload payload) {
-        CommonHeaders headers = CommonHeaders.builder()
-                .eventType(SCHEMA)
-                .eventTypeVersion(SCHEMA_VERSION)
-                .entity(AGGREGATE_NAME + "." + payload.bankAccountId().toString())
-                .createdAt(System.currentTimeMillis()).build();
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public class BankAccountECSTEventBuilder {
+        private UUID bankAccountId;
+        private UUID playerId;
+        private UUID gameId;
+        private int currentCredits;
 
-        return buildRecord(TOPIC_NAME, payload.bankAccountId().toString(), payload, headers);
+        public BankAccountECSTEventBuilder forBankAccount(UUID bankAccountId) {
+            this.bankAccountId = bankAccountId;
+            return this;
+        }
+
+        public BankAccountECSTEventBuilder withPlayer(UUID playerId) {
+            this.playerId = playerId;
+            return this;
+        }
+
+        public BankAccountECSTEventBuilder inGame(UUID gameId) {
+            this.gameId = gameId;
+            return this;
+        }
+
+        public BankAccountECSTEventBuilder withCurrentCredits(int currentCredits) {
+            this.currentCredits = currentCredits;
+            return this;
+        }
+
+        public ProducerRecord<String, byte[]> build() {
+            BankAccountECSTPayload payload = new BankAccountECSTPayload(bankAccountId, playerId, gameId, currentCredits);
+
+            CommonHeaders headers = CommonHeaders.builder()
+                    .eventType(SCHEMA)
+                    .eventTypeVersion(SCHEMA_VERSION)
+                    .entity(AGGREGATE_NAME + "." + bankAccountId.toString())
+                    .createdAt(System.currentTimeMillis()).build();
+
+            return buildRecord(TOPIC_NAME, bankAccountId.toString(), payload, headers);
+        }
+    }
+
+    /**
+     * Creates a new builder instance for constructing BankAccountECSTEvent ProducerRecords.
+     * @return a new BankAccountECSTEventBuilder
+     */
+    public BankAccountECSTEventBuilder builder() {
+        return new BankAccountECSTEventBuilder();
     }
 
 }

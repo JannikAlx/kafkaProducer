@@ -1,12 +1,14 @@
 package de.microservicedungeon.mock.eventing.events.map;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.microservicedungeon.mock.eventing.AbstractEventFactory;
 import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
 import de.microservicedungeon.mock.state.SequenceIdManager;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Component;
 
@@ -54,18 +56,73 @@ public class ResourceExcavatedEvent extends AbstractEventFactory<ResourceExcavat
     ) {}
 
     /**
-     * Builds a new {@code ResourceExcavatedEvent} ProducerRecord from a given payload.
-     * @param payload the event payload
-     * @return a ProducerRecord ready to be published to Kafka
+     * Fluent builder for creating ResourceExcavatedEvent ProducerRecords.
      */
-    public ProducerRecord<String, byte[]> build(ResourceExcavatedPayload payload) {
-        CommonHeaders headers = CommonHeaders.builder()
-                .eventType(SCHEMA)
-                .eventTypeVersion(SCHEMA_VERSION)
-                .entity(AGGREGATE_NAME + "." + payload.planetId().toString())
-                .createdAt(System.currentTimeMillis())
-                .build();
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public class ResourceExcavatedEventBuilder {
+        private UUID planetId;
+        private UUID gameId;
+        private UUID robotId;
+        private UUID playerId;
+        private String resourceType;
+        private Integer amount;
+        private Integer remainingAmount;
 
-        return buildRecord(TOPIC_NAME, payload.planetId().toString(), payload, headers);
+        public ResourceExcavatedEventBuilder forPlanet(UUID planetId) {
+            this.planetId = planetId;
+            return this;
+        }
+
+        public ResourceExcavatedEventBuilder inGame(UUID gameId) {
+            this.gameId = gameId;
+            return this;
+        }
+
+        public ResourceExcavatedEventBuilder byRobot(UUID robotId) {
+            this.robotId = robotId;
+            return this;
+        }
+
+        public ResourceExcavatedEventBuilder withPlayer(UUID playerId) {
+            this.playerId = playerId;
+            return this;
+        }
+
+        public ResourceExcavatedEventBuilder withResourceType(String resourceType) {
+            this.resourceType = resourceType;
+            return this;
+        }
+
+        public ResourceExcavatedEventBuilder withAmount(Integer amount) {
+            this.amount = amount;
+            return this;
+        }
+
+        public ResourceExcavatedEventBuilder withRemainingAmount(Integer remainingAmount) {
+            this.remainingAmount = remainingAmount;
+            return this;
+        }
+
+        public ProducerRecord<String, byte[]> build() {
+            ResourceExcavatedPayload payload = new ResourceExcavatedPayload(
+                    planetId, gameId, robotId, playerId, resourceType, amount, remainingAmount);
+
+            CommonHeaders headers = CommonHeaders.builder()
+                    .eventType(SCHEMA)
+                    .eventTypeVersion(SCHEMA_VERSION)
+                    .entity(AGGREGATE_NAME + "." + planetId.toString())
+                    .createdAt(System.currentTimeMillis())
+                    .build();
+
+            return buildRecord(TOPIC_NAME, planetId.toString(), payload, headers);
+        }
+    }
+
+    /**
+     * Creates a new builder instance for constructing ResourceExcavatedEvent ProducerRecords.
+     * @return a new ResourceExcavatedEventBuilder
+     */
+    public ResourceExcavatedEventBuilder builder() {
+        return new ResourceExcavatedEventBuilder();
     }
 }

@@ -10,11 +10,10 @@ import lombok.ToString;
 import org.apache.kafka.common.header.Header;
 import org.apache.kafka.common.header.internals.RecordHeader;
 
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
-
-import java.nio.ByteBuffer;
 
 /**
  * Common headers for Kafka events as defined in AsyncAPI specifications.

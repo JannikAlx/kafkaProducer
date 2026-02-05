@@ -1,13 +1,15 @@
 package de.microservicedungeon.mock.service;
 
-import de.microservicedungeon.mock.model.*;
+import de.microservicedungeon.mock.model.ResourceType;
 import de.microservicedungeon.mock.model.map.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Maps have to follow a specific format.

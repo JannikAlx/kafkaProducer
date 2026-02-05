@@ -1,12 +1,14 @@
 package de.microservicedungeon.mock.eventing.events.robot;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.microservicedungeon.mock.eventing.AbstractEventFactory;
 import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
 import de.microservicedungeon.mock.state.SequenceIdManager;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Component;
 
@@ -52,18 +54,58 @@ public class RobotConstructedEvent extends AbstractEventFactory<RobotConstructed
     ) {}
 
     /**
-     * Builds a new {@code RobotConstructedEvent} ProducerRecord from a given payload.
-     *
-     * @param payload the event payload
-     * @return a ProducerRecord ready to be published to Kafka
+     * Fluent builder for creating RobotConstructedEvent ProducerRecords.
      */
-    public ProducerRecord<String, byte[]> build(RobotConstructedPayload payload) {
-        CommonHeaders headers = CommonHeaders.builder()
-                .eventType(SCHEMA)
-                .eventTypeVersion(SCHEMA_VERSION)
-                .entity(AGGREGATE_NAME + "." + payload.robotId().toString())
-                .createdAt(System.currentTimeMillis()).build();
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public class RobotConstructedEventBuilder {
+        private UUID robotId;
+        private UUID playerId;
+        private UUID gameId;
+        private PositionPayload position;
 
-        return buildRecord(TOPIC_NAME, payload.gameId().toString() + "." + payload.playerId().toString(), payload, headers);
+        public RobotConstructedEventBuilder forRobot(UUID robotId) {
+            this.robotId = robotId;
+            return this;
+        }
+
+        public RobotConstructedEventBuilder withPlayer(UUID playerId) {
+            this.playerId = playerId;
+            return this;
+        }
+
+        public RobotConstructedEventBuilder inGame(UUID gameId) {
+            this.gameId = gameId;
+            return this;
+        }
+
+        public RobotConstructedEventBuilder atPosition(PositionPayload position) {
+            this.position = position;
+            return this;
+        }
+
+        public RobotConstructedEventBuilder atPosition(Integer x, Integer y) {
+            this.position = new PositionPayload(x, y);
+            return this;
+        }
+
+        public ProducerRecord<String, byte[]> build() {
+            RobotConstructedPayload payload = new RobotConstructedPayload(robotId, playerId, gameId, position);
+
+            CommonHeaders headers = CommonHeaders.builder()
+                    .eventType(SCHEMA)
+                    .eventTypeVersion(SCHEMA_VERSION)
+                    .entity(AGGREGATE_NAME + "." + robotId.toString())
+                    .createdAt(System.currentTimeMillis()).build();
+
+            return buildRecord(TOPIC_NAME, gameId.toString() + "." + playerId.toString(), payload, headers);
+        }
+    }
+
+    /**
+     * Creates a new builder instance for constructing RobotConstructedEvent ProducerRecords.
+     * @return a new RobotConstructedEventBuilder
+     */
+    public RobotConstructedEventBuilder builder() {
+        return new RobotConstructedEventBuilder();
     }
 }

@@ -1,5 +1,6 @@
 # Event Simulator
 
+## Context
 The final goal is to simulate multiple microservices consuming and emitting events.
 
 The simulated environment consists of 4 Services:
@@ -16,15 +17,27 @@ The selling flow would be:
 Moving looks like:
 "move-robot" (player), "robot-moved"(robot)
 
+## Use cases
+
 The simulator has the following usecases:
+- A developer tests a single services integration with the whole system
+- A developer is using the mock system to generate events for building prototype streaming pipelines that rely on sample data
+- A devop is loadtesting a component, e.g. one service and database to benchmark how fast it can consume and produce events.
+  In that case, the kafkaProducer produces events as fast as possible
+
+## Technical requirements
+
+Derived technical capabilities:
 - Fire a chain of events in a sensible order. E.g. `game.created`, `player.joined`. It is important that the GameId does not change between these events. The same is true for many flows.
 - Fire a single event for testing purposes.
 - Usually there are two modes: Creating games and playing a single game.
 
 Chains and single events should both be able to be fired in a continuous mode using virtual threads.
-There should be the option to fire multiple chains for a single game and player. 
+There should be the option to fire multiple chains for a single game and player.
 E.g: Buying robots, Moving those robots, mining, selling, repeat.
 
+There should be a "Game-Simulation mode" where a normal game is simulated and multiple chains for multiple players
+in a single game are published continiously. They should be somewhat consistent.
 
 That means that we need a way to build logical event chains. Use Classes to define "Chains".
 Chains should be easy to define, so they should resemble something like an ordered List, 
@@ -68,3 +81,21 @@ In the game play mode, we need to store:
 - Player balances (as a concurrent hashmap)
 - GameId
 - PlayerIds
+
+
+## GameState
+
+Game state is always just a tool to persist state between event chains. It is not there to really simulate a complete game
+but achieve the bare minimum of "consistency". E.g. if a player buys 3 robots, they should pay the appropriate amount.
+Other rules like this:
+- Robots should only move to valid spaces, meaning not into voids.
+- If a player Sells 5 plasma cores, they should be credited with money for 5 plasma cores, and not a random amount.
+- If a robot is destroyed, it should not be able to move afterwards
+- If a robot is bought, it should be able to be moved by the player afterwards
+- Players should only be able to move their own robots.
+- A player joining a game will then issue their intents in that same game (same UUID).
+- Generally, IDs are persistent and dont change (BankAccount, Game, Mine, Player, Robot) participant ids are irrelevant
+
+Generally, after a chain is completed, the game state should be updated appropriately to reflect the "changes" that
+one published in the chain. But the gamestate is not the driving component publishing the events. The publishing 
+of Chains is the main Goal and requirement of this kafkaProducer

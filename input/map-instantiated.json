@@ -1,0 +1,4180 @@
+{
+  "id": "5804fd6c-99e0-4f7d-8de2-47928ff2faf8",
+  "name": "Converted ASCII Map",
+  "description": "Map converted from ASCII representation",
+  "topRight": {
+    "x": 17,
+    "y": 17
+  },
+  "starSystems": [
+    {
+      "coordinate": {
+        "x": 0,
+        "y": 17
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 1,
+        "y": 17
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "2ed865e1-31b2-4c7f-b30d-e74817c28276",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 2,
+        "y": 17
+      },
+      "gravity": 1,
+      "spaceStation": {
+        "allowsRobotSpawns": true
+      },
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "SPACE_STATION"
+    },
+    {
+      "coordinate": {
+        "x": 3,
+        "y": 17
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "0c4d5bb2-767c-474e-8b57-31efbb4d9221",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 4,
+        "y": 17
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 5,
+        "y": 17
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 6,
+        "y": 17
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "b2bf7e09-22d1-48f5-a6dc-6965a9bd178f",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 7,
+        "y": 17
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 8,
+        "y": 17
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "070373f3-0462-4a75-9082-9e5940a240b5",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 9,
+        "y": 17
+      },
+      "gravity": 1,
+      "spaceStation": {
+        "allowsRobotSpawns": true
+      },
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "SPACE_STATION"
+    },
+    {
+      "coordinate": {
+        "x": 10,
+        "y": 17
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "fef95339-9e3b-45f6-ba25-5ce1507e8028",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 11,
+        "y": 17
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "488750c3-f9c3-4b15-9a02-516b2f45f221",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 12,
+        "y": 17
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "b3623f94-6e6c-4035-8c27-a601fdaf24f4",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 13,
+        "y": 17
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 14,
+        "y": 17
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 15,
+        "y": 17
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 16,
+        "y": 17
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 17,
+        "y": 17
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 0,
+        "y": 16
+      },
+      "gravity": 1,
+      "spaceStation": {
+        "allowsRobotSpawns": true
+      },
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "SPACE_STATION"
+    },
+    {
+      "coordinate": {
+        "x": 1,
+        "y": 16
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "86d7644b-b27f-4ca6-ba1f-d9b6881876da",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 2,
+        "y": 16
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "25eeb012-8f65-460a-ad07-dfdfcd150fd3",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 3,
+        "y": 16
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 4,
+        "y": 16
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 5,
+        "y": 16
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 6,
+        "y": 16
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 7,
+        "y": 16
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 8,
+        "y": 16
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "512cf782-9ea3-4f06-87f4-04f34bff9937",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 9,
+        "y": 16
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "31584dd9-c3da-4dc1-a7ca-83eb17e132ba",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 10,
+        "y": 16
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 11,
+        "y": 16
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 12,
+        "y": 16
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "07b3eacb-925c-44d9-9432-0db0f4506855",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 13,
+        "y": 16
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 14,
+        "y": 16
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 15,
+        "y": 16
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 16,
+        "y": 16
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 17,
+        "y": 16
+      },
+      "gravity": 1,
+      "spaceStation": {
+        "allowsRobotSpawns": true
+      },
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "SPACE_STATION"
+    },
+    {
+      "coordinate": {
+        "x": 0,
+        "y": 15
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "2be21fd6-a64b-439c-9dd6-7c8a549202c0",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 1,
+        "y": 15
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "557dc4c7-2794-4f06-afd1-c918d32d313b",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 2,
+        "y": 15
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 3,
+        "y": 15
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 4,
+        "y": 15
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": true,
+      "voidSystem": false,
+      "type": "BLACK_HOLE"
+    },
+    {
+      "coordinate": {
+        "x": 5,
+        "y": 15
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "e5b50761-57b4-46a9-9302-ec3fbdd969da",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 6,
+        "y": 15
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": true,
+      "voidSystem": false,
+      "type": "BLACK_HOLE"
+    },
+    {
+      "coordinate": {
+        "x": 7,
+        "y": 15
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 8,
+        "y": 15
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 9,
+        "y": 15
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 10,
+        "y": 15
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 11,
+        "y": 15
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": true,
+      "voidSystem": false,
+      "type": "BLACK_HOLE"
+    },
+    {
+      "coordinate": {
+        "x": 12,
+        "y": 15
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 13,
+        "y": 15
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": true,
+      "voidSystem": false,
+      "type": "BLACK_HOLE"
+    },
+    {
+      "coordinate": {
+        "x": 14,
+        "y": 15
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 15,
+        "y": 15
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "75eaf92c-d0f3-4643-82e3-5c98b9e1f29b",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 16,
+        "y": 15
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "d582d248-bd68-40ea-9c24-11ffde3f15c6",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 17,
+        "y": 15
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "56492da4-2262-4e64-b2e1-2fb3fd2e78bc",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 0,
+        "y": 14
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 1,
+        "y": 14
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 2,
+        "y": 14
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 3,
+        "y": 14
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 4,
+        "y": 14
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 5,
+        "y": 14
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 6,
+        "y": 14
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 7,
+        "y": 14
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 8,
+        "y": 14
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 9,
+        "y": 14
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 10,
+        "y": 14
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 11,
+        "y": 14
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 12,
+        "y": 14
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 13,
+        "y": 14
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 14,
+        "y": 14
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 15,
+        "y": 14
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 16,
+        "y": 14
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 17,
+        "y": 14
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "ba59d626-dc2f-407d-8a85-5bf749571acd",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 0,
+        "y": 13
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "a6516c14-374a-4be6-aef4-e3dd68fbadd4",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 1,
+        "y": 13
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 2,
+        "y": 13
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "903c5b20-d732-4dbe-95d8-83256f3419a2",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 3,
+        "y": 13
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 4,
+        "y": 13
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 5,
+        "y": 13
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "619758fd-23f9-40b2-8924-a12d68f4251d",
+        "type": "DARK_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "DARK_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 6,
+        "y": 13
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 7,
+        "y": 13
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 8,
+        "y": 13
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 9,
+        "y": 13
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 10,
+        "y": 13
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 11,
+        "y": 13
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 12,
+        "y": 13
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 13,
+        "y": 13
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 14,
+        "y": 13
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 15,
+        "y": 13
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 16,
+        "y": 13
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 17,
+        "y": 13
+      },
+      "gravity": 1,
+      "spaceStation": {
+        "allowsRobotSpawns": true
+      },
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "SPACE_STATION"
+    },
+    {
+      "coordinate": {
+        "x": 0,
+        "y": 12
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 1,
+        "y": 12
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "3dabd94b-71b6-4c41-8b5c-e0b59a3022e3",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 2,
+        "y": 12
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 3,
+        "y": 12
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 4,
+        "y": 12
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 5,
+        "y": 12
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 6,
+        "y": 12
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 7,
+        "y": 12
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 8,
+        "y": 12
+      },
+      "gravity": 1,
+      "spaceStation": {
+        "allowsRobotSpawns": false
+      },
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "SPACE_STATION"
+    },
+    {
+      "coordinate": {
+        "x": 9,
+        "y": 12
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "48b03991-8449-452f-b1a8-f99c54d85016",
+        "type": "DARK_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "DARK_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 10,
+        "y": 12
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 11,
+        "y": 12
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 12,
+        "y": 12
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "b60e3017-ded8-4e21-a98d-58774cb8f31b",
+        "type": "DARK_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "DARK_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 13,
+        "y": 12
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 14,
+        "y": 12
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 15,
+        "y": 12
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 16,
+        "y": 12
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "fc784360-f92e-463f-a4eb-b87687c98b5e",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 17,
+        "y": 12
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "9c3fd814-6586-4195-a49b-837456f88c68",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 0,
+        "y": 11
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 1,
+        "y": 11
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 2,
+        "y": 11
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": true,
+      "voidSystem": false,
+      "type": "BLACK_HOLE"
+    },
+    {
+      "coordinate": {
+        "x": 3,
+        "y": 11
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 4,
+        "y": 11
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 5,
+        "y": 11
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 6,
+        "y": 11
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 7,
+        "y": 11
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 8,
+        "y": 11
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "5629e481-bcf5-45ac-a489-e9a817d0d40b",
+        "type": "DARK_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "DARK_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 9,
+        "y": 11
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 10,
+        "y": 11
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 11,
+        "y": 11
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 12,
+        "y": 11
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 13,
+        "y": 11
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 14,
+        "y": 11
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 15,
+        "y": 11
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": true,
+      "voidSystem": false,
+      "type": "BLACK_HOLE"
+    },
+    {
+      "coordinate": {
+        "x": 16,
+        "y": 11
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 17,
+        "y": 11
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 0,
+        "y": 10
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "8ee31b18-e718-4a35-aded-81e245ad876e",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 1,
+        "y": 10
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 2,
+        "y": 10
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 3,
+        "y": 10
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 4,
+        "y": 10
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "de216bb9-a403-4b49-96ae-64f6baddff2e",
+        "type": "DARK_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "DARK_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 5,
+        "y": 10
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 6,
+        "y": 10
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 7,
+        "y": 10
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "db6dec5f-2a99-4e0a-a070-9ccf6aa73c8d",
+        "type": "ION_DUST"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "ION_DUST"
+    },
+    {
+      "coordinate": {
+        "x": 8,
+        "y": 10
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 9,
+        "y": 10
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "838ea104-747d-4d58-bf6a-088fff109b51",
+        "type": "ION_DUST"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "ION_DUST"
+    },
+    {
+      "coordinate": {
+        "x": 10,
+        "y": 10
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 11,
+        "y": 10
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 12,
+        "y": 10
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 13,
+        "y": 10
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 14,
+        "y": 10
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 15,
+        "y": 10
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 16,
+        "y": 10
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 17,
+        "y": 10
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "031470ae-a826-4a4a-bea8-6355f36a478b",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 1,
+        "y": 9
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "2c7dda32-e865-4cc2-bce7-56e2e54d2eba",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 2,
+        "y": 9
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "17d5cfbf-0a67-4fa4-8715-5a896b2c9cd9",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 3,
+        "y": 9
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": true,
+      "voidSystem": false,
+      "type": "BLACK_HOLE"
+    },
+    {
+      "coordinate": {
+        "x": 4,
+        "y": 9
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 5,
+        "y": 9
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 6,
+        "y": 9
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 7,
+        "y": 9
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "bf35173d-16ed-4856-af37-8fd3c9202073",
+        "type": "DARK_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "DARK_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 8,
+        "y": 9
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 9,
+        "y": 9
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "137f2e1b-f5e9-4b7f-9c92-fb7fe294bfd3",
+        "type": "PLASMA_CORES"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "PLASMA_CORES"
+    },
+    {
+      "coordinate": {
+        "x": 10,
+        "y": 9
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "4a055d17-a70f-438b-bec0-42623bc31101",
+        "type": "PLASMA_CORES"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "PLASMA_CORES"
+    },
+    {
+      "coordinate": {
+        "x": 11,
+        "y": 9
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "d14d607c-05db-4b17-966a-fae0b1ef32f7",
+        "type": "ION_DUST"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "ION_DUST"
+    },
+    {
+      "coordinate": {
+        "x": 12,
+        "y": 9
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 13,
+        "y": 9
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 14,
+        "y": 9
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "6cc45872-0668-467c-be02-3b95c796d95b",
+        "type": "DARK_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "DARK_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 15,
+        "y": 9
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 16,
+        "y": 9
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": true,
+      "voidSystem": false,
+      "type": "BLACK_HOLE"
+    },
+    {
+      "coordinate": {
+        "x": 17,
+        "y": 9
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 18,
+        "y": 9
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 1,
+        "y": 8
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 2,
+        "y": 8
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 3,
+        "y": 8
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "6422d1a4-0747-4fe5-9a91-1da43be4660f",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 4,
+        "y": 8
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 5,
+        "y": 8
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 6,
+        "y": 8
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 7,
+        "y": 8
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 8,
+        "y": 8
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "f20c94ee-4b70-4ad5-bc8e-8ba65090216a",
+        "type": "ION_DUST"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "ION_DUST"
+    },
+    {
+      "coordinate": {
+        "x": 9,
+        "y": 8
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "b3a8a45c-d487-4f78-ae29-3a655b90f6b1",
+        "type": "PLASMA_CORES"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "PLASMA_CORES"
+    },
+    {
+      "coordinate": {
+        "x": 10,
+        "y": 8
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "6a439ed1-fba7-44d2-b186-2ae7af60e62e",
+        "type": "PLASMA_CORES"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "PLASMA_CORES"
+    },
+    {
+      "coordinate": {
+        "x": 11,
+        "y": 8
+      },
+      "gravity": 1,
+      "spaceStation": {
+        "allowsRobotSpawns": false
+      },
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "SPACE_STATION"
+    },
+    {
+      "coordinate": {
+        "x": 12,
+        "y": 8
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 13,
+        "y": 8
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 14,
+        "y": 8
+      },
+      "gravity": 1,
+      "spaceStation": {
+        "allowsRobotSpawns": false
+      },
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "SPACE_STATION"
+    },
+    {
+      "coordinate": {
+        "x": 15,
+        "y": 8
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 16,
+        "y": 8
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 17,
+        "y": 8
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "6d04b075-2547-40b0-83af-caaa7ae67934",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 18,
+        "y": 8
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "70e1c946-ba8a-48fc-b8c5-b91f3f481093",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 1,
+        "y": 7
+      },
+      "gravity": 1,
+      "spaceStation": {
+        "allowsRobotSpawns": true
+      },
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "SPACE_STATION"
+    },
+    {
+      "coordinate": {
+        "x": 2,
+        "y": 7
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 3,
+        "y": 7
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 4,
+        "y": 7
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 5,
+        "y": 7
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 6,
+        "y": 7
+      },
+      "gravity": 1,
+      "spaceStation": {
+        "allowsRobotSpawns": false
+      },
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "SPACE_STATION"
+    },
+    {
+      "coordinate": {
+        "x": 7,
+        "y": 7
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "d5cea70d-994b-4c0d-8cd0-f994fef15cb3",
+        "type": "DARK_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "DARK_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 8,
+        "y": 7
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 9,
+        "y": 7
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "b09405a6-626d-4705-bb3f-3c8ed07d5377",
+        "type": "ION_DUST"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "ION_DUST"
+    },
+    {
+      "coordinate": {
+        "x": 10,
+        "y": 7
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 11,
+        "y": 7
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "34f5b4b8-1d84-4a7b-8cd7-aa653bb172ed",
+        "type": "ION_DUST"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "ION_DUST"
+    },
+    {
+      "coordinate": {
+        "x": 12,
+        "y": 7
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 13,
+        "y": 7
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "4c68bdd7-19f8-4484-a825-5a2bd338bdf1",
+        "type": "DARK_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "DARK_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 14,
+        "y": 7
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 15,
+        "y": 7
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 16,
+        "y": 7
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 17,
+        "y": 7
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "1b11eb24-3309-4f8f-b978-6fd2f4c5dc37",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 18,
+        "y": 7
+      },
+      "gravity": 1,
+      "spaceStation": {
+        "allowsRobotSpawns": true
+      },
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "SPACE_STATION"
+    },
+    {
+      "coordinate": {
+        "x": 1,
+        "y": 6
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "ae839526-e148-4c61-a112-bfa0d8357d4f",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 2,
+        "y": 6
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "dc711f8c-08e3-457b-8b00-476c75344051",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 3,
+        "y": 6
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 4,
+        "y": 6
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 5,
+        "y": 6
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 6,
+        "y": 6
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 7,
+        "y": 6
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 8,
+        "y": 6
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 9,
+        "y": 6
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 10,
+        "y": 6
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "49dd90c2-920b-43bf-8a56-4d076c7b3cd3",
+        "type": "DARK_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "DARK_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 11,
+        "y": 6
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 12,
+        "y": 6
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 13,
+        "y": 6
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 14,
+        "y": 6
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 15,
+        "y": 6
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 16,
+        "y": 6
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 17,
+        "y": 6
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 18,
+        "y": 6
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "cc762319-7cf2-4bbf-9084-14538d763edb",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 1,
+        "y": 5
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 2,
+        "y": 5
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "c6777018-19e5-48bc-8d45-e88244af94dc",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 3,
+        "y": 5
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": true,
+      "voidSystem": false,
+      "type": "BLACK_HOLE"
+    },
+    {
+      "coordinate": {
+        "x": 4,
+        "y": 5
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 5,
+        "y": 5
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 6,
+        "y": 5
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 7,
+        "y": 5
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 8,
+        "y": 5
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 9,
+        "y": 5
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 10,
+        "y": 5
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 11,
+        "y": 5
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 12,
+        "y": 5
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 13,
+        "y": 5
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 14,
+        "y": 5
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "b96483bb-1c8c-4a72-b9a9-1c0e0f227f8d",
+        "type": "DARK_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "DARK_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 15,
+        "y": 5
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 16,
+        "y": 5
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": true,
+      "voidSystem": false,
+      "type": "BLACK_HOLE"
+    },
+    {
+      "coordinate": {
+        "x": 17,
+        "y": 5
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 18,
+        "y": 5
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "dec57c05-00d4-4017-a842-3f82d7a35b01",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 1,
+        "y": 4
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "223bef64-370d-4aa7-891b-31a116909207",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 2,
+        "y": 4
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "6f2891b2-f3b2-40cc-a91b-6c83c128b4db",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 3,
+        "y": 4
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 4,
+        "y": 4
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 5,
+        "y": 4
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "19c09362-0e75-44c5-a830-0516574695a8",
+        "type": "DARK_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "DARK_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 6,
+        "y": 4
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 7,
+        "y": 4
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 8,
+        "y": 4
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 9,
+        "y": 4
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "52440192-12fa-4d81-8f7d-d50864e04c4f",
+        "type": "DARK_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "DARK_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 10,
+        "y": 4
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 11,
+        "y": 4
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 12,
+        "y": 4
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 13,
+        "y": 4
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 14,
+        "y": 4
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 15,
+        "y": 4
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 16,
+        "y": 4
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 17,
+        "y": 4
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 18,
+        "y": 4
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 1,
+        "y": 3
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 2,
+        "y": 3
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 3,
+        "y": 3
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": true,
+      "voidSystem": false,
+      "type": "BLACK_HOLE"
+    },
+    {
+      "coordinate": {
+        "x": 4,
+        "y": 3
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 5,
+        "y": 3
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 6,
+        "y": 3
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 7,
+        "y": 3
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 8,
+        "y": 3
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 9,
+        "y": 3
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 10,
+        "y": 3
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 11,
+        "y": 3
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 12,
+        "y": 3
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 13,
+        "y": 3
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 14,
+        "y": 3
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 15,
+        "y": 3
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": true,
+      "type": "VOID"
+    },
+    {
+      "coordinate": {
+        "x": 16,
+        "y": 3
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": true,
+      "voidSystem": false,
+      "type": "BLACK_HOLE"
+    },
+    {
+      "coordinate": {
+        "x": 17,
+        "y": 3
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 18,
+        "y": 3
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 1,
+        "y": 2
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 2,
+        "y": 2
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "136b0c94-ea95-4b09-af1f-b447fdcef19a",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 3,
+        "y": 2
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 4,
+        "y": 2
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 5,
+        "y": 2
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 6,
+        "y": 2
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 7,
+        "y": 2
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": true,
+      "voidSystem": false,
+      "type": "BLACK_HOLE"
+    },
+    {
+      "coordinate": {
+        "x": 8,
+        "y": 2
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 9,
+        "y": 2
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": true,
+      "voidSystem": false,
+      "type": "BLACK_HOLE"
+    },
+    {
+      "coordinate": {
+        "x": 10,
+        "y": 2
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 11,
+        "y": 2
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 12,
+        "y": 2
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 13,
+        "y": 2
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 14,
+        "y": 2
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "e9422832-034c-4360-842a-3f67b024d122",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 15,
+        "y": 2
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 16,
+        "y": 2
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 17,
+        "y": 2
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "d46979d8-38d9-4b89-9d51-9fe86af04a4d",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 18,
+        "y": 2
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "f6aa835e-91e5-47be-96a2-e29cd667f2e3",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 1,
+        "y": 1
+      },
+      "gravity": 1,
+      "spaceStation": {
+        "allowsRobotSpawns": true
+      },
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "SPACE_STATION"
+    },
+    {
+      "coordinate": {
+        "x": 2,
+        "y": 1
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 3,
+        "y": 1
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 4,
+        "y": 1
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 5,
+        "y": 1
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "be678a29-1658-4d2a-84c8-0e0b2370b361",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 6,
+        "y": 1
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 7,
+        "y": 1
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 8,
+        "y": 1
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 9,
+        "y": 1
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "21b027c5-4a0f-4bf6-8e94-5a078c28d411",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 10,
+        "y": 1
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 11,
+        "y": 1
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "a21cfd01-7788-4b4c-8704-5e837a4965b6",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 12,
+        "y": 1
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "dc207863-355a-4f2c-95fb-95f26053e296",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 13,
+        "y": 1
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 14,
+        "y": 1
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 15,
+        "y": 1
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "3762352f-445f-4f32-9de6-712bcec1db48",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 16,
+        "y": 1
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 17,
+        "y": 1
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 18,
+        "y": 1
+      },
+      "gravity": 1,
+      "spaceStation": {
+        "allowsRobotSpawns": true
+      },
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "SPACE_STATION"
+    },
+    {
+      "coordinate": {
+        "x": 1,
+        "y": 0
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "10e9137d-12a2-4716-ae3b-50ec9ecc80d7",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 2,
+        "y": 0
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "e62a66d7-4f26-4503-83f3-45fd8d81333b",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 3,
+        "y": 0
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "42aa3849-7427-4544-b6bd-9c7bffb4a8a4",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 4,
+        "y": 0
+      },
+      "gravity": 1,
+      "spaceStation": {
+        "allowsRobotSpawns": true
+      },
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "SPACE_STATION"
+    },
+    {
+      "coordinate": {
+        "x": 5,
+        "y": 0
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "b8c85d26-7ec8-47c4-bb49-20ff2ffe4b18",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 6,
+        "y": 0
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 7,
+        "y": 0
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "baa290a3-3d96-4c0e-8edd-4b594f8c0dcd",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 8,
+        "y": 0
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "584fe3f9-3fd6-4ae6-8b73-5b96156e9679",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 9,
+        "y": 0
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "65290c3b-63b9-40f5-92aa-ada8863cb69f",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 10,
+        "y": 0
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 11,
+        "y": 0
+      },
+      "gravity": 1,
+      "spaceStation": {
+        "allowsRobotSpawns": true
+      },
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "SPACE_STATION"
+    },
+    {
+      "coordinate": {
+        "x": 12,
+        "y": 0
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "bbe7afb3-d5e6-4098-afa1-6ecc9ceaf322",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 13,
+        "y": 0
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "947f7bbf-635b-48bf-9b08-25ae5bfe8d6f",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 14,
+        "y": 0
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "bf9739ce-5b95-4323-bc09-460188769e2a",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    },
+    {
+      "coordinate": {
+        "x": 15,
+        "y": 0
+      },
+      "gravity": 1,
+      "spaceStation": {
+        "allowsRobotSpawns": true
+      },
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "SPACE_STATION"
+    },
+    {
+      "coordinate": {
+        "x": 16,
+        "y": 0
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "00729c50-f373-4f30-96b1-dbe27ffb8c89",
+        "type": "CRYO_GAS"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "CRYO_GAS"
+    },
+    {
+      "coordinate": {
+        "x": 17,
+        "y": 0
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": null,
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "EMPTY"
+    },
+    {
+      "coordinate": {
+        "x": 18,
+        "y": 0
+      },
+      "gravity": 1,
+      "spaceStation": null,
+      "mine": {
+        "id": "7a45ed4b-3163-4edd-a954-de8fffc93e7a",
+        "type": "BIO_MATTER"
+      },
+      "blackHole": false,
+      "voidSystem": false,
+      "type": "BIO_MATTER"
+    }
+  ]
+}

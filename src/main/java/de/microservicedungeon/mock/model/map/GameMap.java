@@ -14,7 +14,6 @@ public class GameMap{
     private final UUID id;
     private final String name;
     private final String description;
-    @Getter
     private final Coordinate topRight;
     private final StarSystem[][] starSystems;
     private final Coordinate[] spawnableSpaceStations;
@@ -55,7 +54,13 @@ public class GameMap{
 
     public boolean isDirectionReachable(Direction direction, Coordinate startingCoordinate){
         var dest = startingCoordinate.move(direction);
-        return starSystems[dest.getX()][dest.getY()].voidSystem();
+        // Check boundaries first
+        if (dest.getX() < 0 || dest.getX() >= getWidth() || dest.getY() < 0 || dest.getY() >= getHeight()) {
+            return false;
+        }
+        // Check if destination system exists and is not a void system (void systems are intraversable)
+        StarSystem destSystem = starSystems[dest.getX()][dest.getY()];
+        return destSystem != null && !destSystem.voidSystem();
     }
 
     public Coordinate getRandomSpawnableStation(){

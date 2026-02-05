@@ -1,6 +1,7 @@
 package de.microservicedungeon.mock.state;
 
 import de.microservicedungeon.mock.model.GameState;
+import de.microservicedungeon.mock.model.Resource;
 import de.microservicedungeon.mock.model.map.Coordinate;
 import de.microservicedungeon.mock.model.map.GameMap;
 import de.microservicedungeon.mock.model.trading.BankAccount;
@@ -15,6 +16,7 @@ public class GameStateImpl implements GameState {
     private final ConcurrentHashMap<UUID, Coordinate> robotPositions = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<UUID, Set<UUID>> playerRobots = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<UUID, BankAccount> playerBankAccounts = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<UUID, List<Resource>> robotCargo = new ConcurrentHashMap<>();
     private final GameMap gameMap;
 
     private volatile UUID currentGameId;
@@ -98,6 +100,11 @@ public class GameStateImpl implements GameState {
     }
 
     @Override
+    public Set<UUID> getPlayerRobots(UUID playerId) {
+        return playerRobots.getOrDefault(playerId, Collections.emptySet());
+    }
+
+    @Override
     public BankAccount getPlayerBankAccount(UUID playerId) {
         return playerBankAccounts.get(playerId);
     }
@@ -106,6 +113,21 @@ public class GameStateImpl implements GameState {
     public void setPlayerBalance(UUID playerId, int balance) {
         playerBankAccounts.computeIfPresent(playerId, (k, existing) -> new BankAccount(existing.bankAccountId(), balance));
         playerBankAccounts.putIfAbsent(playerId, new BankAccount(UUID.randomUUID(), balance));
+    }
+
+    @Override
+    public void addResourceToRobot(UUID robotId, Resource resource) {
+        robotCargo.computeIfAbsent(robotId, k -> new ArrayList<>()).add(resource);
+    }
+
+    @Override
+    public List<Resource> getRobotCargo(UUID robotId) {
+        return robotCargo.getOrDefault(robotId, Collections.emptyList());
+    }
+
+    @Override
+    public void clearRobotCargo(UUID robotId) {
+        robotCargo.remove(robotId);
     }
 
     @Override
@@ -131,6 +153,7 @@ public class GameStateImpl implements GameState {
             robotPositions.clear();
             playerRobots.clear();
             playerBankAccounts.clear();
+            robotCargo.clear();
         } finally {
             gameStateLock.writeLock().unlock();
         }

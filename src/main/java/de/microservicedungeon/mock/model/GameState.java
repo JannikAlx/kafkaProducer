@@ -6,6 +6,7 @@ import de.microservicedungeon.mock.model.trading.BankAccount;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 public interface GameState {
@@ -18,9 +19,15 @@ public interface GameState {
     void updateRobotPosition(UUID robotId, Coordinate coordinate);
     void addAllRobotsToPlayer(UUID playerId, Iterable<UUID> robotIds);
     void addRobotToPlayer(UUID playerId, UUID robotId);
+    Set<UUID> getPlayerRobots(UUID playerId);
 
     BankAccount getPlayerBankAccount(UUID playerId);
     void setPlayerBalance(UUID bankAccountId, int balance);
+
+    // Robot cargo management
+    void addResourceToRobot(UUID robotId, Resource resource);
+    List<Resource> getRobotCargo(UUID robotId);
+    void clearRobotCargo(UUID robotId);
 
     GameMap getMap();
     Coordinate getTopRight();

@@ -18,7 +18,6 @@ public interface GameState {
     void mergeRobotPositions(Map<UUID, Coordinate> robotPositions);
     void updateRobotPosition(UUID robotId, Coordinate coordinate);
     void addAllRobotsToPlayer(UUID playerId, Iterable<UUID> robotIds);
-    void addRobotToPlayer(UUID playerId, UUID robotId);
     Set<UUID> getPlayerRobots(UUID playerId);
 
     BankAccount getPlayerBankAccount(UUID playerId);
@@ -30,8 +29,6 @@ public interface GameState {
     void clearRobotCargo(UUID robotId);
 
     GameMap getMap();
-    Coordinate getTopRight();
-
 
     void reset();
 

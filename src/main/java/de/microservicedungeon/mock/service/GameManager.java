@@ -5,6 +5,7 @@ import de.microservicedungeon.mock.model.ExcavateResourceChain;
 import de.microservicedungeon.mock.model.GameInitChain;
 import de.microservicedungeon.mock.model.GameState;
 import de.microservicedungeon.mock.model.MoveRobotChain;
+import de.microservicedungeon.mock.model.SellResourceChain;
 import de.microservicedungeon.mock.model.map.GameMap;
 import de.microservicedungeon.mock.state.GameStateImpl;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ public class GameManager implements CommandLineRunner {
     private final GameInitChain gameInitChain;
     private final MoveRobotChain moveRobotChain;
     private final ExcavateResourceChain excavateResourceChain;
+    private final SellResourceChain sellResourceChain;
 
     @Value("${game.simulation.publish-delay-ms}")
     private long publishDelayMs;
@@ -38,5 +40,8 @@ public class GameManager implements CommandLineRunner {
 
         // Execute resource excavation after robots are positioned
         excavateResourceChain.executeForGame(gameState);
+
+        // Execute resource selling after excavation
+        sellResourceChain.executeForGame(gameState);
     }
 }

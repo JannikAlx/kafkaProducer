@@ -95,11 +95,6 @@ public class GameStateImpl implements GameState {
     }
 
     @Override
-    public void addRobotToPlayer(UUID playerId, UUID robotId) {
-        playerRobots.computeIfAbsent(playerId, k -> ConcurrentHashMap.newKeySet()).add(robotId);
-    }
-
-    @Override
     public Set<UUID> getPlayerRobots(UUID playerId) {
         return playerRobots.getOrDefault(playerId, Collections.emptySet());
     }
@@ -133,11 +128,6 @@ public class GameStateImpl implements GameState {
     @Override
     public GameMap getMap() {
         return gameMap;
-    }
-
-    @Override
-    public Coordinate getTopRight() {
-        return gameMap.getTopRight();
     }
 
     public Coordinate getRandomRobotSpawn(){

@@ -1,8 +1,9 @@
-package de.microservicedungeon.mock.model;
+package de.microservicedungeon.mock.service.chains;
 
 import de.microservicedungeon.mock.eventing.events.robot.RobotECSTEvent;
 import de.microservicedungeon.mock.eventing.events.robot.RobotMovedEvent;
 import de.microservicedungeon.mock.eventing.intents.MoveRobotIntentFactory;
+import de.microservicedungeon.mock.model.GameState;
 import de.microservicedungeon.mock.model.map.Coordinate;
 import de.microservicedungeon.mock.model.map.Direction;
 import de.microservicedungeon.mock.model.map.GameMap;

@@ -1,9 +1,11 @@
-package de.microservicedungeon.mock.model;
+package de.microservicedungeon.mock.service.chains;
 
 import de.microservicedungeon.mock.eventing.events.map.MineECSTEvent;
 import de.microservicedungeon.mock.eventing.events.map.ResourceExcavatedEvent;
 import de.microservicedungeon.mock.eventing.events.robot.ResourcePickedUpEvent;
 import de.microservicedungeon.mock.eventing.intents.ExcavateResourcesIntentFactory;
+import de.microservicedungeon.mock.model.GameState;
+import de.microservicedungeon.mock.model.Resource;
 import de.microservicedungeon.mock.model.map.Mine;
 import de.microservicedungeon.mock.model.map.StarSystem;
 import de.microservicedungeon.mock.service.ResourceService;

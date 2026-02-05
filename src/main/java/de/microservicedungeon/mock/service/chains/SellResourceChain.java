@@ -1,10 +1,12 @@
-package de.microservicedungeon.mock.model;
+package de.microservicedungeon.mock.service.chains;
 
 import de.microservicedungeon.mock.eventing.events.robot.RobotDeliveredResourcesEvent;
 import de.microservicedungeon.mock.eventing.events.robot.RobotECSTEvent;
 import de.microservicedungeon.mock.eventing.events.trading.BankAccountECSTEvent;
 import de.microservicedungeon.mock.eventing.events.trading.CreditsDepositedEvent;
 import de.microservicedungeon.mock.eventing.intents.SellResourcesIntentFactory;
+import de.microservicedungeon.mock.model.GameState;
+import de.microservicedungeon.mock.model.Resource;
 import de.microservicedungeon.mock.model.map.Coordinate;
 import de.microservicedungeon.mock.model.trading.BankAccount;
 import de.microservicedungeon.mock.service.ResourceService;

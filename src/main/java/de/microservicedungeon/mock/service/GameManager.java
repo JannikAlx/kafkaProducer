@@ -1,11 +1,11 @@
 package de.microservicedungeon.mock.service;
 
-import de.microservicedungeon.mock.model.BuyRobotChain;
-import de.microservicedungeon.mock.model.ExcavateResourceChain;
-import de.microservicedungeon.mock.model.GameInitChain;
+import de.microservicedungeon.mock.service.chains.BuyRobotChain;
+import de.microservicedungeon.mock.service.chains.ExcavateResourceChain;
+import de.microservicedungeon.mock.service.chains.GameInitChain;
 import de.microservicedungeon.mock.model.GameState;
-import de.microservicedungeon.mock.model.MoveRobotChain;
-import de.microservicedungeon.mock.model.SellResourceChain;
+import de.microservicedungeon.mock.service.chains.MoveRobotChain;
+import de.microservicedungeon.mock.service.chains.SellResourceChain;
 import de.microservicedungeon.mock.model.map.GameMap;
 import de.microservicedungeon.mock.state.GameStateImpl;
 import lombok.RequiredArgsConstructor;

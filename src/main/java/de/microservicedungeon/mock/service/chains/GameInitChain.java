@@ -1,4 +1,4 @@
-package de.microservicedungeon.mock.model;
+package de.microservicedungeon.mock.service.chains;
 
 import de.microservicedungeon.mock.eventing.events.game.GameCreatedEvent;
 import de.microservicedungeon.mock.eventing.events.game.GameStateChangedEvent;
@@ -7,6 +7,7 @@ import de.microservicedungeon.mock.eventing.events.game.PlayerJoinedEvent;
 import de.microservicedungeon.mock.eventing.events.map.MapInitializedEvent;
 import de.microservicedungeon.mock.eventing.events.trading.BankAccountECSTEvent;
 import de.microservicedungeon.mock.eventing.events.trading.BankAccountOpenedEvent;
+import de.microservicedungeon.mock.model.GameState;
 import de.microservicedungeon.mock.model.map.GameMap;
 import de.microservicedungeon.mock.model.trading.BankAccount;
 import lombok.RequiredArgsConstructor;

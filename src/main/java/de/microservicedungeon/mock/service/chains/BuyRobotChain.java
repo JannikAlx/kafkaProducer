@@ -1,10 +1,12 @@
-package de.microservicedungeon.mock.model;
+package de.microservicedungeon.mock.service.chains;
 
 import de.microservicedungeon.mock.eventing.events.robot.RobotConstructedEvent;
 import de.microservicedungeon.mock.eventing.events.trading.BankAccountECSTEvent;
 import de.microservicedungeon.mock.eventing.events.trading.ConstructRobotVoucherIssued;
 import de.microservicedungeon.mock.eventing.events.trading.CreditsWithdrawnEvent;
 import de.microservicedungeon.mock.eventing.intents.BuyConstructRobotVoucherIntentFactory;
+import de.microservicedungeon.mock.model.Fixtures;
+import de.microservicedungeon.mock.model.GameState;
 import de.microservicedungeon.mock.model.map.Coordinate;
 import de.microservicedungeon.mock.model.trading.BankAccount;
 import lombok.RequiredArgsConstructor;

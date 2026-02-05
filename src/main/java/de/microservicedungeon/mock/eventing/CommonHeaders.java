@@ -1,4 +1,4 @@
-package de.microservicedungeon.mock.eventing.commonheaders;
+package de.microservicedungeon.mock.eventing;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Min;

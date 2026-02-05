@@ -3,7 +3,7 @@ package de.microservicedungeon.mock.eventing.events.map;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.microservicedungeon.mock.eventing.AbstractEventFactory;
-import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
+import de.microservicedungeon.mock.eventing.CommonHeaders;
 import de.microservicedungeon.mock.model.map.GameMap;
 import de.microservicedungeon.mock.model.map.StarSystem;
 import de.microservicedungeon.mock.state.SequenceIdManager;

@@ -1,4 +1,4 @@
-package de.microservicedungeon.mock.eventing.events;
+package de.microservicedungeon.mock.eventing.events.trading;
 
 import de.microservicedungeon.mock.eventing.AbstractEventFactory;
 import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;

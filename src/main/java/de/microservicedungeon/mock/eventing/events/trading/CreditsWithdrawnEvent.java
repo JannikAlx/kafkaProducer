@@ -1,56 +1,51 @@
-package de.microservicedungeon.mock.eventing.events;
+package de.microservicedungeon.mock.eventing.events.trading;
 
 import de.microservicedungeon.mock.eventing.AbstractEventFactory;
 import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
 import de.microservicedungeon.mock.state.SequenceIdManager;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
+import jakarta.validation.constraints.Positive;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 /**
- * Event(factory) to indicate that a new bank account has been opened for a player in a game. Includes identifying information and the current balance.
+ * Indicates that funds have been withdrawn from a players account. Contains information about how much and the new balance.
  */
 @Component
-public class BankAccountOpenedEvent extends AbstractEventFactory<BankAccountOpenedEvent.BankAccountOpenedPayload> {
-
+public class CreditsWithdrawnEvent extends AbstractEventFactory<CreditsWithdrawnEvent.CreditsWithdrawnPayload> {
     private static final String TOPIC_NAME = "bl.bank-account.events.v1";
     private static final String AGGREGATE_NAME = "bank-account";
-    private static final String SCHEMA = "bank-account-opened";
+    private static final String SCHEMA = "credits-withdrawn";
     private static final int SCHEMA_VERSION = 1;
 
-    public BankAccountOpenedEvent(ObjectMapper objectMapper, SequenceIdManager sequenceIdManager) {
+    public CreditsWithdrawnEvent(ObjectMapper objectMapper, SequenceIdManager sequenceIdManager) {
         super(objectMapper, sequenceIdManager);
     }
 
-    @Builder(builderMethodName = "builder", setterPrefix = "with")
-    public record BankAccountOpenedPayload(
+    public record CreditsWithdrawnPayload(
             @JsonProperty("bankAccountId")
             @NotNull
             UUID bankAccountId,
-            @JsonProperty("playerId")
+            @JsonProperty("deduction")
             @NotNull
-            UUID playerId,
-            @JsonProperty("gameId")
+            @Positive
+            int deduction,
+            @JsonProperty("newBalance")
             @NotNull
-            UUID gameId,
-            @JsonProperty("balance")
-            @NotNull
-            int currentCredits
-    ){}
-
-
+            int newBalance
+    ) {}
 
     /**
-     * Builds a new {@code BankAccountOpenedEvent} from a given dto.
-     * @return a new {@code BankAccountOpenedEvent}
+     * Builds a new {@code CreditsWithdrawnEvent} ProducerRecord from a given payload.
+     *
+     * @param payload the event payload
+     * @return a ProducerRecord ready to be published to Kafka
      */
-    public ProducerRecord<String, byte[]> build(BankAccountOpenedPayload payload) {
+    public ProducerRecord<String, byte[]> build(CreditsWithdrawnPayload payload) {
         CommonHeaders headers = CommonHeaders.builder()
                 .eventType(SCHEMA)
                 .eventTypeVersion(SCHEMA_VERSION)

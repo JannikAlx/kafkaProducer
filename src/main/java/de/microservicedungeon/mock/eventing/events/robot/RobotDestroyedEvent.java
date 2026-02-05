@@ -1,4 +1,4 @@
-package de.microservicedungeon.mock.eventing.events;
+package de.microservicedungeon.mock.eventing.events.robot;
 
 import de.microservicedungeon.mock.eventing.AbstractEventFactory;
 import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
@@ -13,21 +13,21 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 /**
- * Notifies about a robot moving to a new position.
+ * Event(factory) for robot being destroyed (e.g., by a black hole).
  */
 @Component
-public class RobotMovedEvent extends AbstractEventFactory<RobotMovedEvent.RobotMovedPayload> {
+public class RobotDestroyedEvent extends AbstractEventFactory<RobotDestroyedEvent.RobotDestroyedPayload> {
 
     private static final String TOPIC_NAME = "bl.robot.events.v1";
     private static final String AGGREGATE_NAME = "robot";
-    private static final String SCHEMA = "robot-moved";
+    private static final String SCHEMA = "robot-destroyed";
     private static final int SCHEMA_VERSION = 1;
 
-    public RobotMovedEvent(ObjectMapper objectMapper, SequenceIdManager sequenceIdManager) {
+    public RobotDestroyedEvent(ObjectMapper objectMapper, SequenceIdManager sequenceIdManager) {
         super(objectMapper, sequenceIdManager);
     }
 
-    public record RobotMovedPayload(
+    public record RobotDestroyedPayload(
             @JsonProperty("robotId")
             @NotNull
             UUID robotId,
@@ -37,14 +37,13 @@ public class RobotMovedEvent extends AbstractEventFactory<RobotMovedEvent.RobotM
             @JsonProperty("gameId")
             @NotNull
             UUID gameId,
-            @JsonProperty("fromPosition")
+            @JsonProperty("position")
             @NotNull
             @Valid
-            PositionPayload fromPosition,
-            @JsonProperty("toPosition")
+            PositionPayload position,
+            @JsonProperty("reason")
             @NotNull
-            @Valid
-            PositionPayload toPosition
+            String reason
     ) {}
 
     public record PositionPayload(
@@ -57,16 +56,17 @@ public class RobotMovedEvent extends AbstractEventFactory<RobotMovedEvent.RobotM
     ) {}
 
     /**
-     * Builds a new {@code RobotMovedEvent} ProducerRecord from a given payload.
+     * Builds a new {@code RobotDestroyedEvent} ProducerRecord from a given payload.
      * @param payload the event payload
      * @return a ProducerRecord ready to be published to Kafka
      */
-    public ProducerRecord<String, byte[]> build(RobotMovedPayload payload) {
+    public ProducerRecord<String, byte[]> build(RobotDestroyedPayload payload) {
         CommonHeaders headers = CommonHeaders.builder()
                 .eventType(SCHEMA)
                 .eventTypeVersion(SCHEMA_VERSION)
                 .entity(AGGREGATE_NAME + "." + payload.robotId().toString())
-                .createdAt(System.currentTimeMillis()).build();
+                .createdAt(System.currentTimeMillis())
+                .build();
 
         return buildRecord(TOPIC_NAME, payload.robotId().toString(), payload, headers);
     }

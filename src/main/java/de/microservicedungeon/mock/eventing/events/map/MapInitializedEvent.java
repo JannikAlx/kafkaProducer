@@ -1,10 +1,9 @@
-package de.microservicedungeon.mock.eventing.events;
+package de.microservicedungeon.mock.eventing.events.map;
 
 import de.microservicedungeon.mock.model.map.GameMap;
 import de.microservicedungeon.mock.model.map.StarSystem;
 import de.microservicedungeon.mock.eventing.AbstractEventFactory;
 import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
-import de.microservicedungeon.mock.eventing.events.MapInitializedEvent.StarSystemPayload.CoordinatePayload;
 import de.microservicedungeon.mock.state.SequenceIdManager;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,7 +52,7 @@ public class MapInitializedEvent extends AbstractEventFactory<MapInitializedEven
             @JsonProperty("topRight")
             @NotNull
             @Valid
-            CoordinatePayload topRight,
+            MapInitializedEvent.StarSystemPayload.CoordinatePayload topRight,
             @JsonProperty("planets")
             @NotNull
             @Valid
@@ -99,7 +98,7 @@ public class MapInitializedEvent extends AbstractEventFactory<MapInitializedEven
                 gameMap.getId(),
                 gameMap.getName(),
                 gameMap.getDescription(),
-                new CoordinatePayload(gameMap.getTopRight().getX(), gameMap.getTopRight().getY()),
+                new StarSystemPayload.CoordinatePayload(gameMap.getTopRight().getX(), gameMap.getTopRight().getY()),
                 gameMap.getAllStarSystems().stream()
                         .map(this::mapStarSystemToPayload)
                         .toList()
@@ -113,7 +112,7 @@ public class MapInitializedEvent extends AbstractEventFactory<MapInitializedEven
      */
     private StarSystemPayload mapStarSystemToPayload(StarSystem starSystem) {
         return new StarSystemPayload(
-                new CoordinatePayload(starSystem.coordinate().getX(), starSystem.coordinate().getY()),
+                new StarSystemPayload.CoordinatePayload(starSystem.coordinate().getX(), starSystem.coordinate().getY()),
                 starSystem.gravity() != null ? starSystem.gravity() : 0,
                 starSystem.spaceStation() != null ?
                         new StarSystemPayload.SpaceStation(starSystem.spaceStation().allowsRobotSpawns()) : null,

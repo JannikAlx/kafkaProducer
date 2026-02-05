@@ -1,9 +1,9 @@
 package de.microservicedungeon.mock.model;
 
-import de.microservicedungeon.mock.eventing.events.BankAccountECSTEvent;
-import de.microservicedungeon.mock.eventing.events.ConstructRobotVoucherIssued;
-import de.microservicedungeon.mock.eventing.events.CreditsWithdrawnEvent;
-import de.microservicedungeon.mock.eventing.events.RobotConstructedEvent;
+import de.microservicedungeon.mock.eventing.events.trading.BankAccountECSTEvent;
+import de.microservicedungeon.mock.eventing.events.trading.ConstructRobotVoucherIssued;
+import de.microservicedungeon.mock.eventing.events.trading.CreditsWithdrawnEvent;
+import de.microservicedungeon.mock.eventing.events.robot.RobotConstructedEvent;
 import de.microservicedungeon.mock.eventing.intents.BuyConstructRobotVoucherIntentFactory;
 import de.microservicedungeon.mock.model.map.Coordinate;
 import de.microservicedungeon.mock.model.trading.BankAccount;

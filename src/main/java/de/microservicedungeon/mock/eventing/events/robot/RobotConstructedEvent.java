@@ -1,4 +1,4 @@
-package de.microservicedungeon.mock.eventing.events;
+package de.microservicedungeon.mock.eventing.events.robot;
 
 import de.microservicedungeon.mock.eventing.AbstractEventFactory;
 import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
@@ -6,31 +6,27 @@ import de.microservicedungeon.mock.state.SequenceIdManager;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.UUID;
 
 /**
- * Keyed ECST event publishing the robot's current state.
+ * Event(factory) used to publish robot constructed events.
  */
 @Component
-public class RobotECSTEvent extends AbstractEventFactory<RobotECSTEvent.RobotECSTPayload> {
-
-    private static final String TOPIC_NAME = "db.robot.ecst.v1";
+public class RobotConstructedEvent extends AbstractEventFactory<RobotConstructedEvent.RobotConstructedPayload> {
+    private static final String TOPIC_NAME = "bl.robot.events.v1";
     private static final String AGGREGATE_NAME = "robot";
-    private static final String SCHEMA = "robot-ecst";
+    private static final String SCHEMA = "robot-constructed";
     private static final int SCHEMA_VERSION = 1;
 
-    public RobotECSTEvent(ObjectMapper objectMapper, SequenceIdManager sequenceIdManager) {
+    public RobotConstructedEvent(ObjectMapper objectMapper, SequenceIdManager sequenceIdManager) {
         super(objectMapper, sequenceIdManager);
     }
 
-    public record RobotECSTPayload(
+    public record RobotConstructedPayload(
             @JsonProperty("robotId")
             @NotNull
             UUID robotId,
@@ -43,15 +39,7 @@ public class RobotECSTEvent extends AbstractEventFactory<RobotECSTEvent.RobotECS
             @JsonProperty("position")
             @NotNull
             @Valid
-            PositionPayload position,
-            @JsonProperty("cargo")
-            @NotNull
-            List<@Valid CargoPayload> cargo,
-            @JsonProperty("health")
-            @NotNull
-            @Min(0)
-            @Max(100)
-            Integer health
+            PositionPayload position
     ) {}
 
     public record PositionPayload(
@@ -63,28 +51,19 @@ public class RobotECSTEvent extends AbstractEventFactory<RobotECSTEvent.RobotECS
             Integer y
     ) {}
 
-    public record CargoPayload(
-            @JsonProperty("resourceType")
-            @NotNull
-            String resourceType,
-            @JsonProperty("amount")
-            @NotNull
-            @Min(0)
-            Integer amount
-    ) {}
-
     /**
-     * Builds a new {@code RobotECSTEvent} ProducerRecord from a given payload.
+     * Builds a new {@code RobotConstructedEvent} ProducerRecord from a given payload.
+     *
      * @param payload the event payload
      * @return a ProducerRecord ready to be published to Kafka
      */
-    public ProducerRecord<String, byte[]> build(RobotECSTPayload payload) {
+    public ProducerRecord<String, byte[]> build(RobotConstructedPayload payload) {
         CommonHeaders headers = CommonHeaders.builder()
                 .eventType(SCHEMA)
                 .eventTypeVersion(SCHEMA_VERSION)
                 .entity(AGGREGATE_NAME + "." + payload.robotId().toString())
                 .createdAt(System.currentTimeMillis()).build();
 
-        return buildRecord(TOPIC_NAME, payload.robotId().toString(), payload, headers);
+        return buildRecord(TOPIC_NAME, payload.gameId().toString() + "." + payload.playerId().toString(), payload, headers);
     }
 }

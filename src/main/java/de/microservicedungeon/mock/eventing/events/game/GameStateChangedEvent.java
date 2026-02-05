@@ -1,4 +1,4 @@
-package de.microservicedungeon.mock.eventing.events;
+package de.microservicedungeon.mock.eventing.events.game;
 
 import de.microservicedungeon.mock.eventing.AbstractEventFactory;
 import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
@@ -36,7 +36,7 @@ public class GameStateChangedEvent extends AbstractEventFactory<GameStateChanged
     ) {}
 
     /**
-     * Builds a new {@code GameStateChangedEvent} ProducerRecord from a given payload.
+     * Builds a new GameStateChangedEvent ProducerRecord from a given payload.
      * @param payload the event payload
      * @return a ProducerRecord ready to be published to Kafka
      */
@@ -45,7 +45,8 @@ public class GameStateChangedEvent extends AbstractEventFactory<GameStateChanged
                 .eventType(SCHEMA)
                 .eventTypeVersion(SCHEMA_VERSION)
                 .entity(AGGREGATE_NAME + "." + payload.gameId().toString())
-                .createdAt(System.currentTimeMillis()).build();
+                .createdAt(System.currentTimeMillis())
+                .build();
 
         return buildRecord(TOPIC_NAME, payload.gameId().toString(), payload, headers);
     }

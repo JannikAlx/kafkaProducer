@@ -1,45 +1,51 @@
-package de.microservicedungeon.mock.eventing.events;
+package de.microservicedungeon.mock.eventing.events.trading;
 
 import de.microservicedungeon.mock.eventing.AbstractEventFactory;
 import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
 import de.microservicedungeon.mock.state.SequenceIdManager;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 /**
- * Event(factory) used to publish the whole state of the bank account via event carried state transfer. Should include all public information.
+ * Event(factory) indicates that credits were deposited into a players account. Contains information about how much and the resulting balance.
  */
 @Component
-public class BankAccountECSTEvent extends AbstractEventFactory<BankAccountECSTEvent.BankAccountECSTPayload> {
-    private static final String TOPIC_NAME = "db.bank-account.ecst.v1";
+public class CreditsDepositedEvent extends AbstractEventFactory<CreditsDepositedEvent.CreditsDepositedPayload> {
+
+    private static final String TOPIC_NAME = "bl.bank-account.events.v1";
     private static final String AGGREGATE_NAME = "bank-account";
-    private static final String SCHEMA = "bank-account-ecst";
+    private static final String SCHEMA = "credits-deposited";
     private static final int SCHEMA_VERSION = 1;
 
-    public BankAccountECSTEvent(ObjectMapper objectMapper, SequenceIdManager sequenceIdManager) {
+    public CreditsDepositedEvent(ObjectMapper objectMapper, SequenceIdManager sequenceIdManager) {
         super(objectMapper, sequenceIdManager);
     }
 
-    public record BankAccountECSTPayload(@JsonProperty("bankAccountId") @NotNull UUID bankAccountId,
-                                         @JsonProperty("playerId") @NotNull UUID playerId,
-                                         @JsonProperty("gameId") @NotNull UUID gameId,
-                                         @JsonProperty("currentCredits") @NotNull int currentCredits) {
-    }
+    public record CreditsDepositedPayload(
+            @JsonProperty("bankAccountId")
+            @NotNull
+            UUID bankAccountId,
+            @JsonProperty("addition")
+            @NotNull
+            @Positive
+            int addition,
+            @JsonProperty("newBalance")
+            @NotNull
+            int newBalance
+    ){}
 
     /**
-     * Builds a new {@code BankAccountECSTEvent} ProducerRecord from a given payload.
-     *
+     * Builds a new {@code CreditsDepositedEvent} ProducerRecord from a given payload.
      * @param payload the event payload
      * @return a ProducerRecord ready to be published to Kafka
      */
-    public ProducerRecord<String, byte[]> build(BankAccountECSTPayload payload) {
+    public ProducerRecord<String, byte[]> build(CreditsDepositedPayload payload) {
         CommonHeaders headers = CommonHeaders.builder()
                 .eventType(SCHEMA)
                 .eventTypeVersion(SCHEMA_VERSION)
@@ -48,5 +54,4 @@ public class BankAccountECSTEvent extends AbstractEventFactory<BankAccountECSTEv
 
         return buildRecord(TOPIC_NAME, payload.bankAccountId().toString(), payload, headers);
     }
-
 }

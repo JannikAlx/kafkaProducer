@@ -1,13 +1,13 @@
-package de.microservicedungeon.mock.eventing.events;
+package de.microservicedungeon.mock.eventing.events.map;
 
-import de.microservicedungeon.mock.eventing.AbstractPublishableEvent;
-import de.microservicedungeon.mock.eventing.JsonSerializationStrategy;
+import de.microservicedungeon.mock.eventing.AbstractEventFactory;
+import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
 import de.microservicedungeon.mock.state.SequenceIdManager;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Component;
 
@@ -15,14 +15,19 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Keyed ECST event publishing the planet's current state.
+ * Event(factory) for planet ECST (Entity Current State Transfer).
  */
-public class PlanetECSTEvent extends AbstractPublishableEvent<PlanetECSTEvent.PlanetECSTPayload> {
+@Component
+public class PlanetECSTEvent extends AbstractEventFactory<PlanetECSTEvent.PlanetECSTPayload> {
 
     private static final String TOPIC_NAME = "db.planet.ecst.v1";
     private static final String AGGREGATE_NAME = "planet";
     private static final String SCHEMA = "planet-ecst";
     private static final int SCHEMA_VERSION = 1;
+
+    public PlanetECSTEvent(ObjectMapper objectMapper, SequenceIdManager sequenceIdManager) {
+        super(objectMapper, sequenceIdManager);
+    }
 
     public record PlanetECSTPayload(
             @JsonProperty("planetId")
@@ -63,24 +68,19 @@ public class PlanetECSTEvent extends AbstractPublishableEvent<PlanetECSTEvent.Pl
             Integer maxAmount
     ) {}
 
-    protected PlanetECSTEvent(PlanetECSTPayload payload, JsonSerializationStrategy jsonSerializationStrategy, SequenceIdManager sequenceIdManager) {
-        super(TOPIC_NAME, AGGREGATE_NAME, SCHEMA, SCHEMA_VERSION, payload.planetId().toString(), payload, jsonSerializationStrategy, sequenceIdManager);
-    }
+    /**
+     * Builds a new {@code PlanetECSTEvent} ProducerRecord from a given payload.
+     * @param payload the event payload
+     * @return a ProducerRecord ready to be published to Kafka
+     */
+    public ProducerRecord<String, byte[]> build(PlanetECSTPayload payload) {
+        CommonHeaders headers = CommonHeaders.builder()
+                .eventType(SCHEMA)
+                .eventTypeVersion(SCHEMA_VERSION)
+                .entity(AGGREGATE_NAME + "." + payload.planetId().toString())
+                .createdAt(System.currentTimeMillis())
+                .build();
 
-    @Component
-    @AllArgsConstructor
-    public static class Factory {
-        private JsonSerializationStrategy jsonSerializer;
-        private SequenceIdManager sequenceIdManager;
-
-        /**
-         * Builds a new {@code PlanetECSTEvent} ProducerRecord from a given payload.
-         * @param payload the event payload
-         * @return a ProducerRecord ready to be published to Kafka
-         */
-        public ProducerRecord<String, byte[]> build(PlanetECSTPayload payload) {
-            PlanetECSTEvent event = new PlanetECSTEvent(payload, jsonSerializer, sequenceIdManager);
-            return event.toProducerRecord();
-        }
+        return buildRecord(TOPIC_NAME, payload.planetId().toString(), payload, headers);
     }
 }

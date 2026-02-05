@@ -1,25 +1,27 @@
 package de.microservicedungeon.mock.eventing.intents;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.microservicedungeon.mock.eventing.AbstractEventFactory;
 import de.microservicedungeon.mock.eventing.commonheaders.CommonHeaders;
+import de.microservicedungeon.mock.state.SequenceIdManager;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 @Component
-@RequiredArgsConstructor
-public class BuyConstructRobotVoucherIntentFactory {
+public class BuyConstructRobotVoucherIntentFactory extends AbstractEventFactory<BuyConstructRobotVoucherIntentFactory.BuyConstructRobotVoucherIntent> {
 
         private static final String TOPIC_NAME="voucher.intents.v1";
         private static final String EVENT_TYPE="voucher.buy-robot";
         private static final int SCHEMA_VERSION= 1;
-        private final ObjectMapper objectMapper;
+
+        public BuyConstructRobotVoucherIntentFactory(ObjectMapper objectMapper, SequenceIdManager sequenceIdManager) {
+            super(objectMapper, sequenceIdManager);
+        }
 
         public record BuyConstructRobotVoucherIntent(
                 @JsonProperty("gameId")
@@ -41,15 +43,7 @@ public class BuyConstructRobotVoucherIntentFactory {
             String key = playerId.toString();
             BuyConstructRobotVoucherIntent payload =
                     new BuyConstructRobotVoucherIntent(gameId, numberOfRobots);
-            ProducerRecord<String, byte[]> record;
-            try {
-               record = new ProducerRecord<>(TOPIC_NAME, key, objectMapper.writeValueAsBytes(payload));
-            } catch (JsonProcessingException e){
-                throw new RuntimeException(e);
-            }
-            headers.toKafkaHeaders().forEach(
-                    (header -> record.headers().add(header))
-            );
-            return record;
+
+            return buildRecord(TOPIC_NAME, key, payload, headers);
         }
 }

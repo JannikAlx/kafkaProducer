@@ -5,12 +5,14 @@ import de.microservicedungeon.mock.model.Resource;
 import de.microservicedungeon.mock.model.map.Coordinate;
 import de.microservicedungeon.mock.model.map.GameMap;
 import de.microservicedungeon.mock.model.trading.BankAccount;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+@Slf4j
 public class GameStateImpl implements GameState {
     private final ReadWriteLock gameStateLock = new ReentrantReadWriteLock();
     private final ConcurrentHashMap<UUID, Coordinate> robotPositions = new ConcurrentHashMap<>();
@@ -29,8 +31,32 @@ public class GameStateImpl implements GameState {
     public GameStateImpl(GameMap gameMap){
         gameStateLock.writeLock().lock();
         try {
+            // Create a new game
+            currentGameId = UUID.randomUUID();
+
+            // Create 10 players with starting balance
+            for (int i = 0; i < 10; i++) {
+                UUID playerId = UUID.randomUUID();
+                currentPlayerIds.add(playerId);
+                playerBankAccounts.put(playerId, new BankAccount(UUID.randomUUID(), 5000));
+            }
+            this.gameMap = gameMap;
+        } finally {
+            gameStateLock.writeLock().unlock();
+        }
+    }
+
+    @Override
+    public void reInit(){
+        gameStateLock.writeLock().lock();
+        try {
             // Clear existing state
-            reset();
+            currentGameId = null;
+            currentPlayerIds.clear();
+            robotPositions.clear();
+            playerRobots.clear();
+            playerBankAccounts.clear();
+            robotCargo.clear();
 
             // Create a new game
             currentGameId = UUID.randomUUID();
@@ -39,9 +65,8 @@ public class GameStateImpl implements GameState {
             for (int i = 0; i < 10; i++) {
                 UUID playerId = UUID.randomUUID();
                 currentPlayerIds.add(playerId);
-                playerBankAccounts.put(playerId, new BankAccount(UUID.randomUUID(), 10000));
+                playerBankAccounts.put(playerId, new BankAccount(UUID.randomUUID(), 5000));
             }
-            this.gameMap = gameMap;
         } finally {
             gameStateLock.writeLock().unlock();
         }
@@ -102,6 +127,11 @@ public class GameStateImpl implements GameState {
     @Override
     public BankAccount getPlayerBankAccount(UUID playerId) {
         return playerBankAccounts.get(playerId);
+    }
+
+    @Override
+    public Iterable<BankAccount> getAllBankAccounts(){
+        return playerBankAccounts.values();
     }
 
     @Override

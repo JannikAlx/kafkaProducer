@@ -13,8 +13,8 @@ class MapConverterTest {
 
     @Test
     void convertAsciiMapToGameMap() throws IOException {
-        MapConverter mapConverter = new MapConverter();
-        var result = mapConverter.convertAsciiMapToGameMap("input/map.ascii");
+        // Test with bundled map (no custom path)
+        var result = MapConverter.convertAsciiMapToGameMap();
         result.getAllStarSystems().forEach((it) -> {
             log.info("Coordinate: {}, type: {}", it.coordinate().toString(), it.getType());
         });
@@ -24,24 +24,21 @@ class MapConverterTest {
     }
 
     @Test
-    void convertAsciiMapToGameMap2() throws IOException {
-        MapConverter mapConverter = new MapConverter();
-        var result = mapConverter.convertAsciiMapToGameMap("input/map2.ascii");
-        result.getAllStarSystems().forEach((it) -> {
-            log.info("Coordinate: {}, type: {}", it.coordinate().toString(), it.getType());
-        });
+    void convertCustomMapToGameMap() throws IOException {
+        // Test fallback when custom path doesn't exist
+        var result = MapConverter.convertAsciiMapToGameMap("/nonexistent/path.ascii");
 
-        Assertions.assertEquals(12, result.getStarSystems().length);
-        Assertions.assertEquals(12*12,result.getAllStarSystems().size());
+        // Should fall back to bundled map and still work
+        Assertions.assertEquals(18, result.getStarSystems().length);
+        Assertions.assertEquals(18*18,result.getAllStarSystems().size());
     }
 
-
     @Test
-    void convertAsciiMapToJson() throws IOException {
-        MapConverter mapConverter = new MapConverter();
-        var result = mapConverter.convertAsciiMapToGameMap("input/map.ascii");
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectWriter writer = objectMapper.writer();
-        log.info(writer.writeValueAsString(result));
+    void convertBundledMapExplicitly() throws IOException {
+        // Test explicit null parameter
+        var result = MapConverter.convertAsciiMapToGameMap(null);
+
+        Assertions.assertEquals(18, result.getStarSystems().length);
+        Assertions.assertEquals(18*18,result.getAllStarSystems().size());
     }
 }

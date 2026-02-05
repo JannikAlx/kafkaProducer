@@ -69,8 +69,9 @@ public class SellResourceChain {
 
         // Calculate credits to be deposited
         int pricePerUnit = resourceService.getPriceForResource(selectedResource);
+        int previousBalance = bankAccount.balance();
         int totalCredits = amountToSell * pricePerUnit;
-        int newBalance = bankAccount.balance() + totalCredits;
+        int newBalance = previousBalance + totalCredits;
 
         // Remove the sold resource from robot cargo
         robotCargo.remove(selectedResource);
@@ -136,8 +137,8 @@ public class SellResourceChain {
                 log.info("Sent {} to topic {}", extractEventType(record), record.topic());
             }
 
-            log.info("Player {} robot {} sold {} {} for {} credits (new balance: {})",
-                    playerId, selectedRobotId, amountToSell, selectedResource.type(), totalCredits, newBalance);
+            log.info("Player {} robot {} sold {} {} for {} credits (Balance Change: {} to {})",
+                    playerId, selectedRobotId, amountToSell, selectedResource.type(), totalCredits, previousBalance , newBalance);
 
         } catch (Exception e) {
             log.error("Failed to execute sell resource chain for player {}", playerId, e);

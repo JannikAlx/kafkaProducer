@@ -11,7 +11,7 @@ spring:
       retries: 3
       properties:
         linger.ms: 10
-        batch.size: 16384
+        batch.size: 10
 
 # Application configuration
 app:
@@ -25,7 +25,7 @@ game:
     map-width: 30
     map-height: 30
     blackhole-destruction-chance: 0.3  # 30% chance robot is destroyed when moving to blackhole
-    publish-delay-ms: 2  # Small delay between events for readability
+    publish-delay-ms: 3  # Small delay between events for readability
 
 logging:
   level:

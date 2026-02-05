@@ -35,8 +35,12 @@ public class BuyRobotChain {
     public void executeForPlayer(UUID playerId, GameState gameState) {
         UUID currentGame = gameState.currentGame();
         BankAccount bankAccount = gameState.getPlayerBankAccount(playerId);
-        int robotsBought = random.nextInt(10) + 1;
+        int robotsBought = random.nextInt(5) + 1;
         int deductedCredits = robotsBought * Fixtures.ROBOT_PRICE;
+        if (deductedCredits > bankAccount.balance()){
+            log.info("Player {} ran out of money", playerId);
+            return;
+        }
         int finalCredits = bankAccount.balance() - deductedCredits;
         records.add(intentFactory.build(playerId, currentGame, robotsBought));
         records.add(bankAccountECSTEvent.builder()
@@ -75,12 +79,12 @@ public class BuyRobotChain {
 
         for (ProducerRecord<String, byte[]> record : records) {
             kafkaTemplate.send(record);
-            log.info("Sent {} to topic {}", new String(record.headers().lastHeader("event_type").value()), record.topic());
+            //log.info("Sent {} to topic {}", new String(record.headers().lastHeader("event_type").value()), record.topic());
         }
 
         gameState.mergeRobotPositions(newRobotPositions);
         gameState.addAllRobotsToPlayer(playerId, newRobotPositions.keySet());
-        gameState.setPlayerBalance(bankAccount.bankAccountId(), finalCredits);
+        gameState.setPlayerBalance(playerId, finalCredits);
     }
 
     public void executeForGame(GameState gameState) {

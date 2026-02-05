@@ -4,8 +4,12 @@ import de.microservicedungeon.mock.model.ResourceType;
 import de.microservicedungeon.mock.model.map.*;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +21,65 @@ import java.util.UUID;
 @Slf4j
 public class MapConverter {
 
-    public static GameMap convertAsciiMapToGameMap(String filePath) throws IOException {
-        List<String> lines = Files.readAllLines(Paths.get(filePath));
+    /**
+     * Converts ASCII map to GameMap, supporting both custom file paths and bundled resources.
+     * @param customMapPath Optional custom path to map file. If null, uses bundled map.ascii
+     * @return GameMap converted from ASCII representation
+     * @throws IOException if map cannot be loaded
+     */
+    public static GameMap convertAsciiMapToGameMap(String customMapPath) throws IOException {
+        List<String> lines;
 
+        if (customMapPath != null && !customMapPath.trim().isEmpty()) {
+            // Try to load from custom file path
+            Path customPath = Paths.get(customMapPath);
+            if (Files.exists(customPath)) {
+                log.info("Loading map from custom path: {}", customMapPath);
+                lines = Files.readAllLines(customPath);
+            } else {
+                log.warn("Custom map file not found at: {}. Falling back to bundled map.", customMapPath);
+                lines = loadBundledMap();
+            }
+        } else {
+            // Load from bundled resource
+            log.info("Loading bundled map from resources");
+            lines = loadBundledMap();
+        }
+
+        return processMapLines(lines);
+    }
+
+    /**
+     * Legacy method for backward compatibility
+     */
+    public static GameMap convertAsciiMapToGameMap() throws IOException {
+        return convertAsciiMapToGameMap(null);
+    }
+
+    /**
+     * Loads the bundled map.ascii from resources
+     */
+    private static List<String> loadBundledMap() throws IOException {
+        try (InputStream inputStream = MapConverter.class.getClassLoader().getResourceAsStream("map.ascii")) {
+            if (inputStream == null) {
+                throw new IOException("Bundled map.ascii not found in resources");
+            }
+
+            List<String> lines = new ArrayList<>();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    lines.add(line);
+                }
+            }
+            return lines;
+        }
+    }
+
+    /**
+     * Processes the map lines and converts them to GameMap
+     */
+    private static GameMap processMapLines(List<String> lines) throws IOException {
         // Remove header and footer lines with coordinates
         List<String> mapLines = lines.subList(1, lines.size() - 1);
 

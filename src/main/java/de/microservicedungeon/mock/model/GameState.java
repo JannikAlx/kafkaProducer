@@ -4,10 +4,7 @@ import de.microservicedungeon.mock.model.map.Coordinate;
 import de.microservicedungeon.mock.model.map.GameMap;
 import de.microservicedungeon.mock.model.trading.BankAccount;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public interface GameState {
     List<UUID> currentPlayers();
@@ -20,6 +17,7 @@ public interface GameState {
     void addAllRobotsToPlayer(UUID playerId, Iterable<UUID> robotIds);
     Set<UUID> getPlayerRobots(UUID playerId);
 
+    Iterable<BankAccount> getAllBankAccounts();
     BankAccount getPlayerBankAccount(UUID playerId);
     void setPlayerBalance(UUID bankAccountId, int balance);
 
@@ -30,6 +28,7 @@ public interface GameState {
 
     GameMap getMap();
 
+    void reInit();
     void reset();
 
     Coordinate getRandomRobotSpawn();
